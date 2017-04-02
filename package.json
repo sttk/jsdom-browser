@@ -1,0 +1,44 @@
+{
+  "name": "jsdom-browser",
+  "version": "0.1.0",
+  "description": "Web browser simulator with jsdom.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "gulp test",
+    "coveralls": "gulp coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sttk/jsdom-browser.git"
+  },
+  "keywords": [
+    "jsdom",
+    "dom",
+    "html",
+    "web",
+    "browser"
+  ],
+  "author": "Takayuki Sato",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sttk/jsdom-browser/issues"
+  },
+  "homepage": "https://github.com/sttk/jsdom-browser#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^2.13.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-eslint": "^3.0.1",
+    "gulp-fun-style": "^0.3.2",
+    "gulp-plumber": "^1.1.0",
+    "gulp-spawn-mocha": "^3.1.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "copy-props": "^1.6.0",
+    "default-number": "^0.1.0",
+    "default-val": "^0.1.5",
+    "jsdom": "^9.12.0"
+  }
+}

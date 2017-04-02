@@ -1,0 +1,72 @@
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "rules": {
+    "array-bracket-spacing": "error",
+    "block-spacing": "error",
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+    "camelcase": "error",
+    "comma-dangle": ["error", "always"],
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "comma-style": ["error", "last"],
+    "computed-property-spacing": ["error", "never"],
+    "eol-last": ["error"],
+    "func-call-spacing": ["error", "never"],
+    "indent": ["error", 2, {
+      "SwitchCase": 1,
+      "VariableDeclarator": { "var": 2, "let": 2, "const": 3 },
+      "ObjectExpression": 1
+    }],
+    "key-spacing": ["error", { "afterColon": true }],
+    "keyword-spacing": ["error"],
+    "linebreak-style": ["error", "unix"],
+    "max-depth": ["error", 4],
+    "max-len": ["error", 80],
+    "max-nested-callbacks": ["error", 3],
+    "max-statements": ["error", 30],
+    "no-trailing-spaces": "error",
+    "object-curly-spacing": "error",
+    "one-var-declaration-per-line": "error",
+    "operator-linebreak": ["error", "after"],
+    "quote-props": ["error", "as-needed"],
+    "quotes": ["error", "single", {
+      "allowTemplateLiterals": true,
+      "avoidEscape": true
+    }],
+    "semi": ["error", "never"],
+    "semi-spacing": "error",
+    "space-before-blocks": "error",
+    "space-before-function-paren": "error",
+    "space-in-parens": ["error", "never"],
+    "space-infix-ops": "error",
+    "space-unary-ops": ["error", { "words": true, "nonwords": true }],
+
+    "arrow-body-style": ["error", "as-needed", {
+      "requireReturnForObjectLiteral": false
+    }],
+    "arrow-parens": ["error", "as-needed"],
+    "no-class-assign": "error",
+    "no-const-assign": "error",
+    "no-dupe-class-members": "error",
+    "no-duplicate-imports": "error",
+    "no-new-symbol": "error",
+    "no-useless-rename": "error",
+    "no-var": "error",
+    "object-shorthand": "error",
+    "prefer-arrow-callback": ["error", {
+      "allowNamedFunctions": true,
+      "allowUnboundThis": true
+    }],
+    "prefer-const": "error",
+    "prefer-rest-params": "error",
+    "prefer-template": "error",
+    "template-curly-spacing": "error"
+  }
+}
