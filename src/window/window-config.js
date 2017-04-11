@@ -1,38 +1,34 @@
 'use strict'
 
-const ScreenConfig = require('./screen-config')
-const Screen = require('./screen')
+const ConfigBase = require('class-config-base')
+const ScreenConfig = require('../screen/screen-config')
+const Screen = require('../screen/screen')
+const defaultConfig = require('./window-default')
 
-class WindowConfig {
+class WindowConfig extends ConfigBase {
 
-  constructor (config) {
-    config = config || {}
-
-    if (config.screenConfig instanceof ScreenConfig) {
-      this.screenConfig = config.screenConfig
-    } else {
-      this.screenConfig = new ScreenConfig()
-    }
-
-    if (config.screen instanceof Screen) {
-      this._screen = config.screen
-    } else {
-      this._screen = new Screen(this.screenConfig)
-    }
+  constructor (initConfig) {
+    super(initConfig, defaultConfig)
   }
 
-  get screen () { return this._screen }
-  set screen (v) { this._screen = v }
+  getAccessorDescriptors () {
+    if (!(this.$private.screen instanceof Screen)) {
+      this.$private.screen = new Screen(new ScreenConfig())
+    }
 
-  getPropertyDescriptors () {
-    const self = this
+    return super.getAccessorDescriptors()
+  }
+
+  // https://www.w3.org/TR/cssom-view-1/#extensions-to-the-window-interface`
+  getInterfaceDescriptors () {
+    const cfg = this
 
     return {
       screen: {
         enumerable: true,
+        writable: true,
         configurable: true,
-        set (v) { self.screen = v },
-        get () { return self.screen },
+        value: cfg.screen,
       },
     }
   }

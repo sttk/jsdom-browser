@@ -1,0 +1,19 @@
+--- node_modules/jsdom/lib/jsdom.js.orig	2017-03-16 21:10:39.000000000 +0900
++++ node_modules/jsdom/lib/jsdom.js	2017-04-17 08:30:14.000000000 +0900
+@@ -129,13 +129,13 @@
+     userAgent: options.userAgent
+   });
+ 
+-  const documentImpl = idlUtils.implForWrapper(window.document);
+-  documentFeatures.applyDocumentFeatures(documentImpl, options.features);
+-
+   if (options.created) {
+     options.created(null, window.document.defaultView);
+   }
+ 
++  const documentImpl = idlUtils.implForWrapper(window.document);
++  documentFeatures.applyDocumentFeatures(documentImpl, options.features);
++
+   if (options.parsingMode === "html") {
+     if (html === undefined || html === "") {
+       html = "<html><head></head><body></body></html>";

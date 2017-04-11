@@ -1,0 +1,13 @@
+{
+  "screenConfig": {
+    "width": 1280,
+    "height": 800,
+    "availTop": 23,
+    "availLeft": 0,
+    "availRight": 0,
+    "availBottom": 0
+  },
+
+  "windowConfig": {
+  }
+}

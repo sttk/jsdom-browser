@@ -1,9 +1,9 @@
-# [jsdom-browser][repo-url] [![MIT Licenses][mit-img]][mit-url]
-===========================
+# [jsdom-browser][repo-url] [![NPM][npm-img]][npm-url] [![MIT Licenses][mit-img]][mit-url] [![Build Status][travis-img]][travis-url] [![Build Status][appveyor-img]][appveyor-url] [![Coverage Status][coverage-img]][coverage-url]
 
 Web browser simulator with jsdom.
 
 ---
+
 **NOTE:** *Because of the issue ＃1720 in jsdom, jsdom cannot configure the properties of `Window` object. 
 As a temporary treatment, you can resolve this issue by modifying `lib/jsdom.js` in jsdom as follows:*
 
@@ -26,6 +26,7 @@ As a temporary treatment, you can resolve this issue by modifying `lib/jsdom.js`
 136   const documentImpl = idlUtils.implForWrapper(window.document);
 137   documentFeatures.applyDocumentFeatures(documentImpl, options.features);
 ```
+
 ---
 
 ## Install
@@ -41,32 +42,93 @@ For simulating default browser's behaviors,
 
 ```js
 const jsdom = require('jsdom')
-const browser = require('jsdom-browser')
+const Browser = require('jsdom-browser')
 
-let document = jsdom('', {
+const browser = new Browser()
+const window = jsdom('', {
   created(err, window) {
     browser.simulate(window)
   }
-})
+}).defaultView
 ```
 
-If you want to simulate a browser you configure,
+If you want to simulate a browser that you configure,
 
 ```js
 const jsdom = require('jsdom')
-const browser = require('jsdom-browser')
+const Browser = require('jsdom-browser')
 
 // Create your browser configurations
-let browserConfig = new browser.BrowserConfig({
-  window: ...
+const browser= new Browser({
+  screenConfig: { ... },
 })
 
-let document = jsdom('', {
+const browser = new Browser()
+const window = jsdom('', {
   created(err, window) {
-    browser.simulate(window, browserConfig)
+    browser.simulate(window)
   }
-})
+}).defaultView
 ```
+
+## Configuring
+
+`Browser` can be configured with its constructor's argument, which is a plain object or a `Browser` object. The format of the plain objec and it is as follows:
+
+* **screenConfig** [object] : An object to configure a `Screen` object.
+    * **width** [number] : Width of the screen.
+    * **height** [number] : Height of the screen.
+    * **availTop** [number] : Available position from top side of the screen.
+    * **availLeft** [number] : Available position from left side of the screen.
+    * **availRight** [number] : Available position from right side of the screen.
+    * **availBottom** [number] : Available position from bottom side of the screen.
+
+Following code is an example of configuring a `Browser` object:
+
+```js
+const browserConfig =  {
+  screenConfig: {
+    width: 2048, height: 1024,
+    availTop: 4, availLeft: 5, availRight: 5, availBottom: 40,
+  },
+}
+
+const browser = new Browser(browserConfig)
+```
+
+### Configuring the `window.screen`
+
+The properties of `browser.screenConfig` is same with **screenConfig** above.
+Though the properties of `window.screen` are read only, you can change their values with `browser.screenConfig`.
+
+```js
+window.screen.width // => 2048
+window.screen.height // => 1024
+
+browser.screenConfig.width = 1280
+browser.screenConfig.height = 1000
+
+window.screen.width // => 1280
+window.screen.height // => 1000
+```
+
+## API
+
+### <u>*constructor* ([ browserConfig ])</u>
+
+Constructs a `Browser` instance.
+
+**Parameters:**
+
+* **browserConfig** [ object ] : A plain object  or a `Browser` object of which the properties are needed to simulate a target browser. (optional)
+
+### <u>simulate (window) => Void</u>
+
+Configures a `Window` object and its descendant objects to simulate a Web browser.
+
+**Parameters:**
+
+* **window** [object] : A `Window` object created by **jsdom**.
 
 ## Progress
 
@@ -78,82 +140,6 @@ let document = jsdom('', {
     - *moveTo, moveBy, resizeTo, resizeBy (Not yet)*
     - *scroll, scrollTo, scrollBy (Not yet)*
     - *matchMedia (Not yet)*
-
-
-## API
-
-#### <u>*browser***.simulate(window [, browserConfig])**</u>
-
-Is the function that attaches properties and functions to HTML elements for simulating the behaviors of a Web browser.
-
-**Parameters:**
-
-* window [Window] : A [Window](https://www.w3.org/TR/cssom-view-1/#extensions-to-the-window-interface) object.
-* browserConfig [object] : A [BrowserConfig](#id-BrowserConfig) object. (optional)
-
-<a name="id-BrowserConfig"></a>
-#### <u>*browser***.BrowserConfig**</u>
-
-Is the class to configure HTML elements.
-This class binds all configuring objects corresponding with HTML elements.
-
-**Properties:**
-
-* **windowConfig** [WindowConfig] : A [WindowConfig](#id-WindowConfig) object.
-
-**Functions:**
-
-* *constructor*({ windowConfig })
-
-
-<a name="id-WindowConfig"></a>
-#### <u>*browser***.WindowConfig**</u>
-
-Is the class to configure the behaviors of a Window object.
-
-**Properties:**
-
-* **screenConfig** [ScreenConfig] : A [ScreenConfig](#id-ScreenConfig) object.
-* **screen** [Screen] : A [Screen](https://www.w3.org/TR/cssom-view-1/#screen) object.
-
-**Functions:**
-
-* *constructor*({ screenConfig, screen })
-
-* **getPropertyDescriptors()**
-
-    Is the function that returns name-descriptor map about Window's properties.
-
-    **Returns:** [object]
-    
-    An object which maps between property names and property descriptors about Window object.
-
-
-<a name="id-ScreenConfig"></a>
-#### <u>*browser***.ScreenConfig**</u>
-
-Is the class to configure the behaviors of a Screen object.
-
-**Properties:**
-
-* **width** [number] : The full width of the screen. [px]
-* **height** [number] : The full height of the screen. [px]
-* **availWidth** [number] : The available width of the screen. [px]
-* **availHeight** [number] : The available height of the screen. [px]
-* **availLeft** [number] : The available left position of the screen. [px]
-* **availTop** [number] : The available top position of the screen. [px]
-
-**Functions:**
-
-* *constructor*()
-
-* **getPropertyDescrptors()**
-
-    Is the function that returns name-descriptor map about Screen's properties.
-
-    **Returns:** [object]
-    
-    An object which maps between property names and property descriptors about Screen object.
 
 ## References
 
@@ -169,7 +155,9 @@ This program is free software under [MIT][mit-url] License.
 See the file LICENSE in this distribution for more details.
 
 
-[repo-url]: https://github.com/sttk/jsdom-browsers/
+[repo-url]: https://github.com/sttk/jsdom-browser/
+[npm-img]: https://img.shields.io/badge/npm-v0.1.0-blue.svg
+[npm-url]: https://www.npmjs.org/package/jsdom-browser/
 [mit-img]: https://img.shields.io/badge/license-MIT-green.svg
 [mit-url]: https://opensource.org/licenses.MIT
 [travis-img]: https://travis-ci.org/sttk/jsdom-browser.svg?branch=master
@@ -178,3 +166,4 @@ See the file LICENSE in this distribution for more details.
 [appveyor-url]: https://ci.appveyor.com/project/sttk/jsdom-browser
 [coverage-img]: https://coveralls.io/repos/github/sttk/jsdom-browser/badge.svg?branch=master
 [coverage-url]: https://coveralls.io/github/sttk/jsdom-browser?branch=master
+

@@ -3,17 +3,25 @@
     "node": true,
     "es6": true
   },
+
   "extends": "eslint:recommended",
+
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
   },
+
+  "globals": {
+    "describe": true,
+    "it": true,
+  },
+
   "rules": {
     "array-bracket-spacing": "error",
     "block-spacing": "error",
     "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
     "camelcase": "error",
-    "comma-dangle": ["error", "always"],
+    "comma-dangle": ["error", "only-multiline"],
     "comma-spacing": ["error", { "before": false, "after": true }],
     "comma-style": ["error", "last"],
     "computed-property-spacing": ["error", "never"],
@@ -32,7 +40,7 @@
     "max-nested-callbacks": ["error", 3],
     "max-statements": ["error", 30],
     "no-trailing-spaces": "error",
-    "object-curly-spacing": "error",
+    "object-curly-spacing": ["error", "always"],
     "one-var-declaration-per-line": "error",
     "operator-linebreak": ["error", "after"],
     "quote-props": ["error", "as-needed"],
@@ -46,7 +54,7 @@
     "space-before-function-paren": "error",
     "space-in-parens": ["error", "never"],
     "space-infix-ops": "error",
-    "space-unary-ops": ["error", { "words": true, "nonwords": true }],
+    "space-unary-ops": ["error", { "words": true, "nonwords": false }],
 
     "arrow-body-style": ["error", "as-needed", {
       "requireReturnForObjectLiteral": false
