@@ -14,17 +14,17 @@ class ScreenConfig extends ConfigBase {
   getAccessorDescriptors () {
     return {
 
-      width: getNumberPropertyDescriptor,
+      width: getNumberPropDesc,
 
-      height: getNumberPropertyDescriptor,
+      height: getNumberPropDesc,
 
-      availTop: getNumberPropertyDescriptor,
+      availTop: getNumberPropDesc,
 
-      availLeft: getNumberPropertyDescriptor,
+      availLeft: getNumberPropDesc,
 
-      availRight: getNumberPropertyDescriptor,
+      availRight: getNumberPropDesc,
 
-      availBottom: getNumberPropertyDescriptor,
+      availBottom: getNumberPropDesc,
     }
   }
 
@@ -33,57 +33,23 @@ class ScreenConfig extends ConfigBase {
     const cfg = this
     return {
 
-      width: {
-        enumerable: true,
-        set () {},
-        get () { return cfg.width },
-      },
+      width: getReadonlyPropDesc(() => cfg.width),
 
-      height: {
-        enumerable: true,
-        set () {},
-        get () { return cfg.height },
-      },
+      height: getReadonlyPropDesc(() => cfg.height),
 
-      availWidth: {
-        enumerable: true,
-        set () {},
-        get () {
-          return Math.max(0, cfg.width - cfg.availLeft - cfg.availRight)
-        },
-      },
+      availWidth: getReadonlyPropDesc(() =>
+        Math.max(0, cfg.width - cfg.availLeft - cfg.availRight)),
 
-      availHeight: {
-        enumerable: true,
-        set () {},
-        get () {
-          return Math.max(0, cfg.height - cfg.availTop - cfg.availBottom)
-        },
-      },
+      availHeight: getReadonlyPropDesc(() =>
+        Math.max(0, cfg.height - cfg.availTop - cfg.availBottom)),
 
-      availLeft: {
-        enumerable: true,
-        set () {},
-        get () { return cfg.availLeft },
-      },
+      availLeft: getReadonlyPropDesc(() => cfg.availLeft),
 
-      availTop: {
-        enumerable: true,
-        set () {},
-        get () { return cfg.availTop },
-      },
+      availTop: getReadonlyPropDesc(() => cfg.availTop),
 
-      colorDepth: {
-        enumerable: true,
-        set () {},
-        get () { return 24 },
-      },
+      colorDepth: getReadonlyPropDesc(() => 24),
 
-      pixelDepth: {
-        enumerable: true,
-        set () {},
-        get () { return 24 },
-      },
+      pixelDepth: getReadonlyPropDesc(() => 24),
 
       toString: {
         value: () => '[object Screen]',
@@ -92,12 +58,22 @@ class ScreenConfig extends ConfigBase {
   }
 }
 
-function getNumberPropertyDescriptor (parent, key) {
+function getNumberPropDesc (parent, key) {
   return {
     enumerable: true,
     get () { return parent[key] },
     set (v) { parent[key] = defaultNumber(v, parent[key], 0) },
   }
 }
+
+function getReadonlyPropDesc (getter) {
+  return {
+    enumerable: true,
+    set: noop,
+    get: getter,
+  }
+}
+
+function noop () {}
 
 module.exports = ScreenConfig

@@ -59,11 +59,12 @@ const jsdom = require('jsdom')
 const Browser = require('jsdom-browser')
 
 // Create your browser configurations
-const browser= new Browser({
+const browserConfig = {
   screenConfig: { ... },
-})
+}
 
-const browser = new Browser()
+const browser = new Browser(browserConfig)
+
 const window = jsdom('', {
   created(err, window) {
     browser.simulate(window)
