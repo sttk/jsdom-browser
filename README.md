@@ -4,7 +4,7 @@ Web browser simulator with jsdom.
 
 ---
 
-**NOTE:** *Because of the issue ＃1720 in jsdom, jsdom cannot configure the properties of `Window` object. 
+**NOTE:** *Because of the issue ＃1720 in jsdom, jsdom cannot configure the properties of a Window object. 
 As a temporary treatment, you can resolve this issue by modifying `lib/jsdom.js` in jsdom as follows:*
 
 ```
@@ -38,106 +38,113 @@ npm install sttk/jsdom-browser --save-dev
 
 ## Usage
 
-For simulating default browser's behaviors,
+### Simplest usage
+
+The simplest usage of **BrowserConfig** and the way to simulate the default Web browser's behaviors are as follows:
 
 ```js
 const jsdom = require('jsdom')
-const Browser = require('jsdom-browser')
+const BrowserConfig = require('jsdom-browser')
 
-const browser = new Browser()
+const browserConfig = new BrowserConfig()
 const window = jsdom('', {
-  created(err, window) {
-    browser.simulate(window)
+  created (error, window) {
+    browserConfig.configure(window)
   }
 }).defaultView
 ```
 
-If you want to simulate a browser that you configure,
+After this, you can use some features of the simulated Web browser that this module supports.
+
+### Configuring parameters
+
+To configure some parameters of the simulated Web browser, for example the window position, the window size, the size of the windows edge and so on, you can set a *initConfig* object as a parameter to **BrowserConfig#simulate**:
+
 
 ```js
-const jsdom = require('jsdom')
-const Browser = require('jsdom-browser')
+const browserConfig = new BrowserConfig()
 
-// Create your browser configurations
-const browserConfig = {
-  screenConfig: { ... },
-}
-
-const browser = new Browser(browserConfig)
-
-const window = jsdom('', {
-  created(err, window) {
-    browser.simulate(window)
-  }
-}).defaultView
-```
-
-## Configuring
-
-`Browser` can be configured with its constructor's argument, which is a plain object or a `Browser` object. The format of the plain objec and it is as follows:
-
-* **screenConfig** [object] : An object to configure a `Screen` object.
-    * **width** [number] : Width of the screen.
-    * **height** [number] : Height of the screen.
-    * **availTop** [number] : Available position from top side of the screen.
-    * **availLeft** [number] : Available position from left side of the screen.
-    * **availRight** [number] : Available position from right side of the screen.
-    * **availBottom** [number] : Available position from bottom side of the screen.
-
-Following code is an example of configuring a `Browser` object:
-
-```js
-const browserConfig =  {
+const initConfig = {
+  windowConfig: {
+    top: 10, left: 50, width: 600, height: 400,
+    frame: { edgeSize: { bottom: 40 } },
+  },
   screenConfig: {
-    width: 2048, height: 1024,
-    availTop: 4, availLeft: 5, availRight: 5, availBottom: 40,
+    width: 1280, height: 800, availTop: 23, availBottom: 0,
   },
 }
 
-const browser = new Browser(browserConfig)
+const window = jsdom('', {
+  created (error, window) {
+    browserConfig.configure(window, initConfig)
+  }
+}).defaultView
 ```
 
-### Configuring the `window.screen`
-
-The properties of `browser.screenConfig` is same with **screenConfig** above.
-Though the properties of `window.screen` are read only, you can change their values with `browser.screenConfig`.
+And you can change the configurations of the `window` later by changing the `browserConfig`'s properties:
 
 ```js
-window.screen.width // => 2048
-window.screen.height // => 1024
-
-browser.screenConfig.width = 1280
-browser.screenConfig.height = 1000
-
+window.outerWidth // => 600
 window.screen.width // => 1280
-window.screen.height // => 1000
+
+browserConfig.windowConfig.width = 800
+browserConfig.screenConfig.width = 2048
+
+window.outerWidth // => 800
+window.screen.width // => 2048
+```
+
+
+### Configuring behaviours
+
+To configure some behaviors of the simulated Web browser, you can extend and change the member classes of **BrowserConfig**:
+
+```js
+const browserConfig = new BrowserConfig()
+
+class MyWindowConfig extends BrowserConfig.WindowConfig { ... }
+
+browserConfig.WindowConfig = MyWindowConfig
+
+const window = jsdom('', {
+  created (error, window) {
+    browserConfig.configure(window)
+  }
+}).defaultView
 ```
 
 ## API
 
-### <u>*constructor* ([ browserConfig ])</u>
+### BrowserConfig class
 
-Constructs a `Browser` instance.
+#### <u>*constructor* ()</u>
 
-**Parameters:**
+Constructs a `BrowserConfig` instance.
 
-* **browserConfig** [ object ] : A plain object  or a `Browser` object of which the properties are needed to simulate a target browser. (optional)
+#### <u>.configure (window [, initConfig ])</u>
 
-### <u>simulate (window) => Void</u>
-
-Configures a `Window` object and its descendant objects to simulate a Web browser.
+Configure to simulate a browser.
 
 **Parameters:**
 
-* **window** [object] : A `Window` object created by **jsdom**.
+* **window** [object] : A Window object created by jsdom.
+* **initConfig** [object | BrowserConfig] : A parameter tree to configure a browser. (optional)
+
+More detail API of **BrowserConfig** and other classes are as follow:
+
+* [BrowserConfig class](docs/api/BrowserConfig.md)
+* [WindowConfig class](docs/api/WindowConfig.md)
+* [ScreenConfig class](docs/api/ScreenConfig.md)
 
 ## Progress
 
+- [Screen](https://www.w3.org/TR/cssom-view-1/#screen) &#x2713;
+- [ScreenOrientation]() *(Not yet)*
 - [Window](https://www.w3.org/TR/cssom-view-1/#extensions-to-the-window-interface)
     - screen &#x2713;
-    - *innerWidth, innerHeight, outerWidth, outerHeight, screenX, screenY,
-      devicePixelRatio (Not yet)*
-    - *scrollX, scrollY, pageXOffset, pageYOffset (Not yet)*
+    - innerWidth, innerHeight, outerWidth, outerHeight, screenX, screenY,
+      devicePixelRatio &#x2713;
+    - scrollX, scrollY, pageXOffset, pageYOffset &#x2713;
     - *moveTo, moveBy, resizeTo, resizeBy (Not yet)*
     - *scroll, scrollTo, scrollBy (Not yet)*
     - *matchMedia (Not yet)*

@@ -6,35 +6,50 @@ const Screen = require('./screen/screen')
 const defaultConfig = require('./browser-default')
 const copyProps = require('copy-props')
 
-class Browser {
+class BrowserConfig {
 
-  constructor (initConfig) {
-    const config = {}
-    if (initConfig instanceof Browser) {
-      config.screenConfig = copyProps(initConfig.screenConfig)
-      config.windowConfig = copyProps(initConfig.windowConfig)
-    } else {
-      copyProps(initConfig, copyProps(defaultConfig, config))
-    }
-
-    const screenCfg = new ScreenConfig(config.screenConfig)
-    Object.defineProperty(this, 'screenConfig', { value: screenCfg })
-
-    const screen = new Screen(screenCfg)
-    config.windowConfig.screen = screen
-
-    const windowCfg = new WindowConfig(config.windowConfig)
-    Object.defineProperty(this, 'windowConfig', { value: windowCfg })
+  constructor () {
+    this.WindowConfig = BrowserConfig.WindowConfig
+    this.ScreenConfig = BrowserConfig.ScreenConfig
   }
 
-  simulate (window) {
+  configure (window, browserConfig) {
     if (this.windowObject) {
       return
     }
 
-    this.windowConfig.configure(window)
+    let screenCfg,
+        windowCfg
+
+    if (browserConfig instanceof BrowserConfig) {
+      screenCfg = copyProps(browserConfig.screenConfig)
+      windowCfg = copyProps(browserConfig.windowConfig)
+    } else {
+      screenCfg = copyProps(defaultConfig.screenConfig)
+      windowCfg = copyProps(defaultConfig.windowConfig)
+
+      if (browserConfig) {
+        copyProps(browserConfig.screenConfig, screenCfg)
+        copyProps(browserConfig.windowConfig, windowCfg)
+      }
+    }
+
+    screenCfg = new this.ScreenConfig(screenCfg)
+    Object.defineProperty(this, 'screenConfig', { value: screenCfg })
+
+    if (!(windowCfg.screen instanceof Screen)) {
+      windowCfg.screen = new Screen(screenCfg)
+    }
+
+    windowCfg = new this.WindowConfig(windowCfg)
+    Object.defineProperty(this, 'windowConfig', { value: windowCfg })
+
+    windowCfg.configure(window)
     Object.defineProperty(this, 'windowObject', { value: window })
   }
 }
 
-module.exports = Browser
+Object.defineProperty(BrowserConfig, 'ScreenConfig', { value: ScreenConfig })
+Object.defineProperty(BrowserConfig, 'WindowConfig', { value: WindowConfig })
+
+module.exports = BrowserConfig

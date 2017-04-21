@@ -22,8 +22,8 @@ class WindowConfig extends ConfigBase {
     return {
       screen: parent => ({
         enumerable: true,
-        set () {},
         get () { return parent.screen },
+        set () {},
       }),
 
       width: parent => ({
