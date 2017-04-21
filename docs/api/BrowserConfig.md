@@ -20,7 +20,7 @@ And this class collects the classes to configure other DOM objects.
 
 #### <u>ScreenConfig : class</u>
 
-### *Static Properties*
+### *Class Properties*
 
 #### <u>BrowserConfig.WindowConfig : class</u>
 

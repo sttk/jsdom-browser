@@ -32,7 +32,7 @@ As a temporary treatment, you can resolve this issue by modifying `lib/jsdom.js`
 ## Install
 
 ```js
-npm install sttk/jsdom-browser --save-dev
+npm install jsdom-browser --save-dev
 ```
 
 
@@ -139,7 +139,7 @@ More detail API of **BrowserConfig** and other classes are as follow:
 ## Progress
 
 - [Screen](https://www.w3.org/TR/cssom-view-1/#screen) &#x2713;
-- [ScreenOrientation]() *(Not yet)*
+- [ScreenOrientation](https://www.w3.org/TR/screen-orientation/) *(Not yet)*
 - [Window](https://www.w3.org/TR/cssom-view-1/#extensions-to-the-window-interface)
     - screen &#x2713;
     - innerWidth, innerHeight, outerWidth, outerHeight, screenX, screenY,
@@ -147,6 +147,7 @@ More detail API of **BrowserConfig** and other classes are as follow:
     - scrollX, scrollY, pageXOffset, pageYOffset &#x2713;
     - *moveTo, moveBy, resizeTo, resizeBy (Not yet)*
     - *scroll, scrollTo, scrollBy (Not yet)*
+    - *open (Not yet)*
     - *matchMedia (Not yet)*
 
 ## References
