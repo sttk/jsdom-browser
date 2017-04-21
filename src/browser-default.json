@@ -9,5 +9,62 @@
   },
 
   "windowConfig": {
+    "screen": {},
+    "top": 0,
+    "left": 0,
+    "width": 1024,
+    "height": 768,
+    "frame": {
+      "edgeSize": {
+        "top": 74,
+        "left": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "minSize": { 
+        "width": 400,
+        "height": 272
+      },
+      "minOpeningSize": {
+        "width": 400,
+        "height": 272
+      },
+      "minResizableSize": {
+        "width": 400,
+        "height": 272
+      },
+      "openingShift": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "popup": {
+      "edgeSize": {
+        "top": 51,
+        "left": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "minSize": { 
+        "width": 100,
+        "height": 122
+      },
+      "minOpeningSize": {
+        "width": 151,
+        "height":100 
+      },
+      "minResizableSize": {
+        "width": 100,
+        "height": 122
+      },
+      "openingShift": {
+        "x": 22,
+        "y": 22
+      }
+    },
+    "zoom": 1,
+    "minZoom": 0.25,
+    "maxZoom": 5,
+    "isFrameWindow": true
   }
 }
