@@ -4,7 +4,7 @@
   "description": "Web browser simulator with jsdom.",
   "main": "src/index.js",
   "scripts": {
-    "postinstall": "gulp patch",
+    "patch": "gulp patch",
     "test": "gulp test",
     "coveralls": "gulp coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
   },
