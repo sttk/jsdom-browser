@@ -54,6 +54,8 @@ describe('window/window-config', () => {
     expect(windowConfig.minOpeningSize.height).to.equal(0)
     expect(windowConfig.minResizableSize.width).to.equal(0)
     expect(windowConfig.minResizableSize.height).to.equal(0)
+    expect(windowConfig.isMovable).to.equal(false)
+    expect(windowConfig.isResizable).to.equal(false)
   })
 
   it('Should create WindowConfig object with a WindowConfig object', () => {
@@ -138,6 +140,8 @@ describe('window/window-config', () => {
     expect(windowConfig.minResizableSize.height).to.equal(58)
     expect(windowConfig.openingShift.x).to.equal(1)
     expect(windowConfig.openingShift.y).to.equal(2)
+    expect(windowConfig.isMovable).to.equal(false)
+    expect(windowConfig.isResizable).to.equal(false)
 
     windowConfig.isFrameWindow = false
 
@@ -151,6 +155,8 @@ describe('window/window-config', () => {
     expect(windowConfig.minResizableSize.height).to.equal(57)
     expect(windowConfig.openingShift.x).to.equal(11)
     expect(windowConfig.openingShift.y).to.equal(12)
+    expect(windowConfig.isMovable).to.equal(true)
+    expect(windowConfig.isResizable).to.equal(true)
   })
 
   describe('property accessors', () => {
@@ -274,6 +280,16 @@ describe('window/window-config', () => {
     it('Should change .isFrameWindow', () => {
       windowConfig.isFrameWindow = false
       expect(windowConfig.isFrameWindow).to.equal(false)
+    })
+
+    it('Should change .isMovable/.isResizable', () => {
+      windowConfig.isFrameWindow = true
+      expect(windowConfig.isMovable).to.equal(false)
+      expect(windowConfig.isResizable).to.equal(false)
+
+      windowConfig.isFrameWindow = false
+      expect(windowConfig.isMovable).to.equal(true)
+      expect(windowConfig.isResizable).to.equal(true)
     })
   })
 

@@ -12,6 +12,10 @@ class WindowConfig extends ConfigBase {
     super(initConfig, defaultConfig)
   }
 
+  configure (instance) {
+    Object.defineProperties(instance, this.getInterfaceDescriptors(instance))
+  }
+
   getAccessorDescriptors () {
     if (!(this.$private.screen instanceof Screen)) {
       this.$private.screen = new Screen(new ScreenConfig())
@@ -138,8 +142,16 @@ class WindowConfig extends ConfigBase {
     return frameOrPopup(this).openingShift
   }
 
+  get isMovable () {
+    return !this.isFrameWindow
+  }
+
+  get isResizable () {
+    return !this.isFrameWindow
+  }
+
   // https://www.w3.org/TR/cssom-view-1/#extensions-to-the-window-interface`
-  getInterfaceDescriptors () {
+  getInterfaceDescriptors (win) {
     const cfg = this
 
     return {
@@ -230,6 +242,65 @@ class WindowConfig extends ConfigBase {
         set (v) { replaceProp(this, 'devicePixelRatio', v) },
         get () { return cfg.zoom },
       },
+
+
+      moveTo: {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: (x, y) => moveTo(cfg, x, y),
+      },
+
+      moveBy: {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: (x, y) => moveTo(cfg, cfg.left + x, cfg.top + y),
+      },
+
+      resizeTo: {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: (x, y) => resizeTo(cfg, x, y),
+      },
+
+      resizeBy: {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: (x, y) => resizeTo(cfg, cfg.width + x, cfg.height + y),
+      },
+
+      scroll: {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: (x, y) => {
+          win.document.body.scrollLeft = x
+          win.document.body.scrollTop  = y
+        },
+      },
+
+      scrollTo: {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: (x, y) => {
+          win.document.body.scrollLeft = x
+          win.document.body.scrollTop  = y
+        },
+      },
+
+      scrollBy: {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: (x, y) => {
+          win.document.body.scrollLeft += x
+          win.document.body.scrollTop  += y
+        },
+      },
     }
   }
 }
@@ -245,6 +316,42 @@ function replaceProp (obj, name, value) {
     writable: true,
     value,
   })
+}
+
+function moveTo (cfg, x, y) {
+  if (!cfg.isMovable) {
+    return
+  }
+
+  const xmin = cfg.screen.availLeft,
+        xmax = cfg.screen.width - cfg.width,
+        ymin = cfg.screen.availTop,
+        ymax = cfg.screen.height - cfg.height - 4
+
+  cfg.left = defaultNumber(x, xmin, xmin, xmax)
+  cfg.top  = defaultNumber(y, ymin, ymin, ymax)
+}
+
+function resizeTo (cfg, x, y) {
+  if (!cfg.isResizable) {
+    return
+  }
+
+  const wmin = cfg.minResizableSize.width,
+        wmax = cfg.screen.availWidth,
+        hmin = cfg.minResizableSize.height,
+        hmax = cfg.screen.availHeight
+
+  cfg.width = defaultNumber(x, wmin, wmin, wmax)
+  cfg.height = defaultNumber(y, hmin, hmin, hmax)
+
+  const xmin = cfg.screen.availLeft,
+        xmax = cfg.screen.availLeft + cfg.screen.availWidth - cfg.width,
+        ymin = cfg.screen.availTop,
+        ymax = cfg.screen.availTop + cfg.screen.availHeight - cfg.height
+
+  cfg.left = defaultNumber(cfg.left, xmin, xmin, xmax)
+  cfg.top  = defaultNumber(cfg.top, ymin, ymin, ymax)
 }
 
 module.exports = WindowConfig
