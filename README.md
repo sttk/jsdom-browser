@@ -108,8 +108,8 @@ More detail API of **BrowserConfig** and other classes are as follow:
     - innerWidth, innerHeight, outerWidth, outerHeight, screenX, screenY,
       devicePixelRatio &#x2713;
     - scrollX, scrollY, pageXOffset, pageYOffset &#x2713;
-    - *moveTo, moveBy, resizeTo, resizeBy* (Not yet)
-    - *scroll, scrollTo, scrollBy* (Not yet)
+    - moveTo, moveBy, resizeTo, resizeBy &#x2713;
+    - scroll, scrollTo, scrollBy  &#x2713;
     - *open (Not yet)*
     - *matchMedia (Not yet)*
 
