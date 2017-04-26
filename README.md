@@ -1,40 +1,12 @@
 # [jsdom-browser][repo-url] [![NPM][npm-img]][npm-url] [![MIT Licenses][mit-img]][mit-url] [![Build Status][travis-img]][travis-url] [![Build Status][appveyor-img]][appveyor-url] [![Coverage Status][coverage-img]][coverage-url]
 
-Web browser simulator with jsdom.
-
----
-
-**NOTE:** *Because of the issue ＃1720 in jsdom, jsdom cannot configure the properties of a Window object. 
-As a temporary treatment, you can resolve this issue by modifying `lib/jsdom.js` in jsdom as follows:*
-
-```
-(jsdom/lib/jsdom.js)
-132   const documentImpl = idlUtils.implForWrapper(window.document);
-133   documentFeatures.applyDocumentFeatures(documentImpl, options.features);
-134
-135   if (options.created) {
-136     options.created(null, window.document.defaultView);
-137   }
-```
- 　　　　　　　　　　　　↓
- 
-```
-132   if (options.created) {
-133     options.created(null, window.document.defaultView);
-134   }
-135
-136   const documentImpl = idlUtils.implForWrapper(window.document);
-137   documentFeatures.applyDocumentFeatures(documentImpl, options.features);
-```
-
----
+Web browser simulator with [jsdom](https://github.com/tmpvar/jsdom).
 
 ## Install
 
 ```js
-npm install jsdom-browser --save-dev
+npm install jsdom jsdom-browser --save-dev
 ```
-
 
 ## Usage
 
@@ -43,22 +15,19 @@ npm install jsdom-browser --save-dev
 The simplest usage of **BrowserConfig** and the way to simulate the default Web browser's behaviors are as follows:
 
 ```js
-const jsdom = require('jsdom')
+const { JSDOM } = require('jsdom')
 const BrowserConfig = require('jsdom-browser')
 
 const browserConfig = new BrowserConfig()
-const window = jsdom('', {
-  created (error, window) {
-    browserConfig.configure(window)
-  }
-}).defaultView
+const window = new JSDOM().window
+browserConfig.configure(window)
 ```
 
 After this, you can use some features of the simulated Web browser that this module supports.
 
 ### Configuring parameters
 
-To configure some parameters of the simulated Web browser, for example the window position, the window size, the size of the windows edge and so on, you can set a *initConfig* object as a parameter to **BrowserConfig#simulate**:
+To configure some parameters of the simulated Web browser, for example the window position, the window size, the size of the windows edge and so on, you can set a *initConfig* object as a parameter to **BrowserConfig#configure**:
 
 
 ```js
@@ -74,11 +43,8 @@ const initConfig = {
   },
 }
 
-const window = jsdom('', {
-  created (error, window) {
-    browserConfig.configure(window, initConfig)
-  }
-}).defaultView
+const window = new JSDOM().window
+browserConfig.configure(window, initConfig)
 ```
 
 And you can change the configurations of the `window` later by changing the `browserConfig`'s properties:
@@ -106,11 +72,8 @@ class MyWindowConfig extends BrowserConfig.WindowConfig { ... }
 
 browserConfig.WindowConfig = MyWindowConfig
 
-const window = jsdom('', {
-  created (error, window) {
-    browserConfig.configure(window)
-  }
-}).defaultView
+const window = new JSDOM().window
+browserConfig.configure(window)
 ```
 
 ## API
@@ -145,8 +108,8 @@ More detail API of **BrowserConfig** and other classes are as follow:
     - innerWidth, innerHeight, outerWidth, outerHeight, screenX, screenY,
       devicePixelRatio &#x2713;
     - scrollX, scrollY, pageXOffset, pageYOffset &#x2713;
-    - *moveTo, moveBy, resizeTo, resizeBy (Not yet)*
-    - *scroll, scrollTo, scrollBy (Not yet)*
+    - *moveTo, moveBy, resizeTo, resizeBy* (Not yet)
+    - *scroll, scrollTo, scrollBy* (Not yet)
     - *open (Not yet)*
     - *matchMedia (Not yet)*
 
@@ -175,4 +138,3 @@ See the file LICENSE in this distribution for more details.
 [appveyor-url]: https://ci.appveyor.com/project/sttk/jsdom-browser
 [coverage-img]: https://coveralls.io/repos/github/sttk/jsdom-browser/badge.svg?branch=master
 [coverage-url]: https://coveralls.io/github/sttk/jsdom-browser?branch=master
-

@@ -4,7 +4,6 @@
   "description": "Web browser simulator with jsdom.",
   "main": "src/index.js",
   "scripts": {
-    "patch": "gulp patch",
     "test": "gulp test",
     "coveralls": "gulp coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
   },
@@ -28,15 +27,14 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "coveralls": "^2.13.0",
-    "diff": "^3.2.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-eslint": "^3.0.1",
     "gulp-fun-style": "^0.3.2",
     "gulp-plumber": "^1.1.0",
-    "gulp-spawn-mocha": "^3.1.0",
+    "gulp-spawn-mocha": "^3.3.0",
     "istanbul": "^0.4.5",
-    "jsdom": "^9.12.0",
-    "mocha": "^3.2.0",
+    "jsdom": "^10.0.0",
+    "mocha": "^3.3.0",
     "semver": "^5.3.0"
   },
   "dependencies": {

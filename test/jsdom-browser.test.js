@@ -5,7 +5,7 @@ const BrowserConfig = require('../src')
 const WindowConfig = require('../src/window/window-config')
 const ScreenConfig = require('../src/screen/screen-config')
 const Screen = require('../src/screen/screen')
-const jsdom = require('jsdom')
+const { JSDOM } = require('jsdom')
 
 describe('jsdom-browser', () => {
 
@@ -39,11 +39,8 @@ describe('jsdom-browser', () => {
 
   it('Should configure a Window object with default config.', () => {
     const browserConfig = new BrowserConfig()
-    const window = jsdom.jsdom('', {
-      created (err, window) {
-        browserConfig.configure(window)
-      },
-    }).defaultView
+    const window = new JSDOM().window
+    browserConfig.configure(window)
 
     expect(browserConfig.ScreenConfig).to.equal(ScreenConfig)
     expect(browserConfig.WindowConfig).to.equal(WindowConfig)
@@ -63,11 +60,8 @@ describe('jsdom-browser', () => {
     const initConfig = {
       windowConfig: { width: 2048, height: 1024 },
     }
-    const window = jsdom.jsdom('', {
-      created (err, window) {
-        browserConfig.configure(window, initConfig)
-      },
-    }).defaultView
+    const window = new JSDOM().window
+    browserConfig.configure(window, initConfig)
 
     expect(browserConfig.ScreenConfig).to.equal(ScreenConfig)
     expect(browserConfig.WindowConfig).to.equal(WindowConfig)
@@ -87,18 +81,16 @@ describe('jsdom-browser', () => {
     const initConfig = {
       windowConfig: { width: 2048, height: 1024 },
     }
-    const window = jsdom.jsdom('', {
-      created (err, window) {
-        browserConfig.configure(window, initConfig)
-      },
-    }).defaultView
+    const window = new JSDOM().window
+    browserConfig.configure(window, initConfig)
 
     const browserConfig2 = new BrowserConfig()
-    const window2 = jsdom.jsdom('', {
-      created (err, window) {
-        browserConfig2.configure(window, browserConfig)
-      },
-    }).defaultView
+    const window2 = new JSDOM().window
+    browserConfig2.configure(window2, browserConfig)
+
+    expect(window).not.to.equal(window2)
+    expect(browserConfig.windowObject).to.equal(window)
+    expect(browserConfig2.windowObject).to.equal(window2)
 
     expect(browserConfig2.screenConfig).not.to
       .equal(browserConfig.screenConfig)
@@ -126,17 +118,11 @@ describe('jsdom-browser', () => {
   it('Should not configure twice', () => {
     const browserConfig = new BrowserConfig()
 
-    const window = jsdom.jsdom('', {
-      created (err, window) {
-        browserConfig.configure(window)
-      },
-    }).defaultView
+    const window = new JSDOM().window
+    browserConfig.configure(window)
 
-    const window2 = jsdom.jsdom('', {
-      created (err, window) {
-        browserConfig.configure(window)
-      },
-    }).defaultView
+    const window2 = new JSDOM().window
+    browserConfig.configure(window2)
 
     expect(window.screen).to.be.a.instanceof(Screen)
     expect(window2.screen).not.to.be.a.instanceof(Screen)
@@ -150,11 +136,8 @@ describe('jsdom-browser', () => {
     browserConfig.ScreenConfig = ScreenConfigEx
     browserConfig.WindowConfig = WindowConfigEx
 
-    const window = jsdom.jsdom('', {
-      created (err, window) {
-        browserConfig.configure(window)
-      },
-    }).defaultView
+    const window = new JSDOM().window
+    browserConfig.configure(window)
 
     expect(browserConfig.ScreenConfig).to.equal(ScreenConfigEx)
     expect(browserConfig.WindowConfig).to.equal(WindowConfigEx)

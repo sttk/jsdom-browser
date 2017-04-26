@@ -6,7 +6,7 @@ const expect = require('chai').expect
 const WindowConfig = require('../../src/window/window-config')
 const ScreenConfig = require('../../src/screen/screen-config')
 const Screen = require('../../src/screen/screen')
-const jsdom = require('jsdom')
+const { JSDOM } = require('jsdom')
 
 const semver = require('semver')
 const version = process.version
@@ -16,11 +16,8 @@ describe('window/properties', () => {
   const screenConfig = new ScreenConfig()
   const screen = new Screen(screenConfig)
   const windowConfig = new WindowConfig({ screen })
-  const window = jsdom.jsdom('', {
-    created (err, window) {
-      windowConfig.configure(window)
-    }
-  }).defaultView
+  const window = new JSDOM().window
+  windowConfig.configure(window)
 
   it('.screen', () => {
     expect(window.screen).to.equal(screen)
