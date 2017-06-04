@@ -5,13 +5,10 @@ const fun = require('gulp-fun-style')
 const eslint = require('gulp-eslint')
 const plumber = require('gulp-plumber')
 const mocha = require('gulp-spawn-mocha')
-
-let srcfiles = ['src/**/*.js']
-let jsonfiles = ['src/**/*.json']
-let testfiles = ['test/**/*.js']
+const jsdoc = require('gulp-jsdoc3')
 
 fun.lint = () =>
-  gulp.src([].concat(srcfiles, testfiles))
+  gulp.src(['src/**/*.js', '!src/**/*.doc.js'])
       .pipe(plumber())
       .pipe(eslint())
       .pipe(eslint.format())
@@ -19,8 +16,16 @@ fun.lint = () =>
 fun.lint.description = 'Lint js source files.'
 
 
+fun.jsdoc = done =>
+  gulp.src(['src/**/*.doc.js', 'README.md'])
+      .pipe(plumber())
+      .pipe(jsdoc(require('./.jsdoc.json'), done))
+
+fun.jsdoc.description = 'Create API document.'
+
+
 fun.test = () =>
-  gulp.src(testfiles)
+  gulp.src(['src/**/*.test.js'])
       .pipe(plumber())
       .pipe(mocha())
 
@@ -28,17 +33,26 @@ fun.test.description = 'Run the unit tests.'
 
 
 fun.coverage = () =>
-  gulp.src(testfiles)
+  gulp.src(['src/**/*.test.js'])
       .pipe(plumber())
       .pipe(mocha({ istanbul: true }))
 
 fun.coverage.description = 'Measure the coverage of the unit tests.'
 
 
-fun.watch = {
-  watch: [].concat(srcfiles, jsonfiles, testfiles),
+fun.watch_test = {
+  watch: ['src/**/*.js', '!src/**/*.doc.js', 'src/**/*.json'],
   call: [['lint', 'coverage']]
 }
 
-fun.watch.description = 'Watch file changes, then lint and test'
+
+fun.watch_doc = {
+  watch: ['src/**/*.doc.js', 'README.md'],
+  call: [['jsdoc']]
+}
+
+
+fun.watch = ['watch_test', 'watch_doc']
+
+fun.watch.description = 'Watch file changes, then lint, test or jsdoc'
 

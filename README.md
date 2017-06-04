@@ -1,103 +1,84 @@
-# [jsdom-browser][repo-url] [![NPM][npm-img]][npm-url] [![MIT Licenses][mit-img]][mit-url] [![Build Status][travis-img]][travis-url] [![Build Status][appveyor-img]][appveyor-url] [![Coverage Status][coverage-img]][coverage-url]
+# [jsdom-browser][repo-url] [![Github.io][io-image]][io-url] [![NPM][npm-img]][npm-url] [![MIT Licenses][mit-img]][mit-url] [![Build Status][travis-img]][travis-url] [![Build Status][appveyor-img]][appveyor-url] [![Coverage Status][coverage-img]][coverage-url]
 
-Web browser simulator with [jsdom](https://github.com/tmpvar/jsdom).
+This module simulates behaviors of a Web browser with [jsdom](https://github.com/tmpvar/jsdom), and will provides implementations about layouts of view elements and windows.
+
+> This module simulates Chrome on macOS for the time being, but is implemented so as to be configurable and extendable to other browsers.
 
 ## Install
 
-```js
-npm install jsdom jsdom-browser --save-dev
+```sh
+$ npm install jsdom-browser --save-dev
 ```
 
 ## Usage
 
-### Simplest usage
-
-The simplest usage of **BrowserConfig** and the way to simulate the default Web browser's behaviors are as follows:
+### Create a browser
 
 ```js
-const { JSDOM } = require('jsdom')
-const BrowserConfig = require('jsdom-browser')
-
-const browserConfig = new BrowserConfig()
-const window = new JSDOM().window
-browserConfig.configure(window)
+const Browser = require('jsdom-browser')
+const browser = new Browser()
 ```
 
-After this, you can use some features of the simulated Web browser that this module supports.
-
-### Configuring parameters
-
-To configure some parameters of the simulated Web browser, for example the window position, the window size, the size of the windows edge and so on, you can set a *initConfig* object as a parameter to **BrowserConfig#configure**:
-
+### Open a blank window
 
 ```js
-const browserConfig = new BrowserConfig()
+const window0 = browser.newWindow()
 
-const initConfig = {
-  windowConfig: {
-    top: 10, left: 50, width: 600, height: 400,
-    frame: { edgeSize: { bottom: 40 } },
-  },
-  screenConfig: {
-    width: 1280, height: 800, availTop: 23, availBottom: 0,
-  },
-}
-
-const window = new JSDOM().window
-browserConfig.configure(window, initConfig)
+window0.name = 'win0'
 ```
 
-And you can change the configurations of the `window` later by changing the `browserConfig`'s properties:
+### Get a window config
 
 ```js
-window.outerWidth // => 600
-window.screen.width // => 1280
+const windowConfig0 = browser.getConfig(window0)
+windowConfig0.top = 200
+windowConfig0.left = 300
 
-browserConfig.windowConfig.width = 800
-browserConfig.screenConfig.width = 2048
-
-window.outerWidth // => 800
-window.screen.width // => 2048
+window0.screenX // => 300
+window0.screenY // => 200
 ```
 
-
-### Configuring behaviours
-
-To configure some behaviors of the simulated Web browser, you can extend and change the member classes of **BrowserConfig**:
+### Get a window already opened
 
 ```js
-const browserConfig = new BrowserConfig()
-
-class MyWindowConfig extends BrowserConfig.WindowConfig { ... }
-
-browserConfig.WindowConfig = MyWindowConfig
-
-const window = new JSDOM().window
-browserConfig.configure(window)
+window0 === browser.getWindow(0)  // by index
+window0 === browser.getWidnow('win0') // by name
+window0 === browser.getWindow(windowConfig0) // by window config
 ```
 
-## API
+### Open a window with loading a page content
 
-### BrowserConfig class
+```js
+browser.addContent('http://www.example.com', '<p>Hello!</p>')
 
-#### <u>*constructor* ()</u>
+const window1 = browser.openWindow('http://www.example.com')
 
-Constructs a `BrowserConfig` instance.
+window1.addEventListener('load', event => {
+  // Called after loading content.
+})
 
-#### <u>.configure (window [, initConfig ])</u>
+const config1 = browser.getConfig(window1)
+config1.on('load', (err, win, cfg) => {
+  // Called after loading content.
+})
+```
 
-Configure to simulate a browser.
+### Open a child window
 
-**Parameters:**
+```js
+browser.addContent('http://sample.net', '<html> ... </html>')
 
-* **window** [object] : A Window object created by jsdom.
-* **initConfig** [object | BrowserConfig] : A parameter tree to configure a browser. (optional)
+const window2 = window.open('http://sample.net', '_blank', 'top=100,left=200,height=300,width=400')
 
-More detail API of **BrowserConfig** and other classes are as follow:
+window2.addEventListener('load', event => {
+  // Called after loading content.
+})
 
-* [BrowserConfig class](docs/api/BrowserConfig.md)
-* [WindowConfig class](docs/api/WindowConfig.md)
-* [ScreenConfig class](docs/api/ScreenConfig.md)
+const config2 = browser.getConfig(window2)
+config2.on('load', (err, win, cfg) => {
+  // Called after loading content.
+})
+```
 
 ## Progress
 
@@ -110,14 +91,14 @@ More detail API of **BrowserConfig** and other classes are as follow:
     - scrollX, scrollY, pageXOffset, pageYOffset &#x2713;
     - moveTo, moveBy, resizeTo, resizeBy &#x2713;
     - scroll, scrollTo, scrollBy  &#x2713;
-    - *open (Not yet)*
+    - open, close  &#x2713;
     - *matchMedia (Not yet)*
+- And planning more HTMLElements ...
 
 ## References
 
 - [CSSOM View Modules](https://www.w3.org/TR/cssom-view-1)
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/)
-
 
 ## License
 
@@ -128,6 +109,8 @@ See the file LICENSE in this distribution for more details.
 
 
 [repo-url]: https://github.com/sttk/jsdom-browser/
+[io-image]: http://img.shields.io/badge/HP-github.io-ff99cc.svg
+[io-url]: https://sttk.github.io/jsdom-browser/
 [npm-img]: https://img.shields.io/badge/npm-v0.4.0-blue.svg
 [npm-url]: https://www.npmjs.org/package/jsdom-browser/
 [mit-img]: https://img.shields.io/badge/license-MIT-green.svg

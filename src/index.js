@@ -1,55 +1,61 @@
 'use strict'
 
-const ScreenConfig = require('./screen/screen-config')
-const WindowConfig = require('./window/window-config')
-const Screen = require('./screen/screen')
-const defaultConfig = require('./browser-default')
 const copyProps = require('copy-props')
+const WindowManager = require('./window/manager')
+const ContentManager = require('./window/content')
+const WindowConfig = require('./window/config')
+const { newWindow, openWindow } = require('./window/opening')
+const ScreenConfig = require('./screen/config')
+const Screen = require('./screen')
+const defaultConfig = require('./default')
 
-class BrowserConfig {
+class Browser {
 
-  constructor () {
-    this.WindowConfig = BrowserConfig.WindowConfig
-    this.ScreenConfig = BrowserConfig.ScreenConfig
+  constructor (browserConfig) {
+    browserConfig = copyProps(browserConfig, copyProps(defaultConfig, {}))
+
+    const screenConfig = new ScreenConfig(browserConfig.screenConfig)
+    const screen = new Screen(screenConfig)
+
+    browserConfig.windowConfig.screen = screen
+    const windowConfig = new WindowConfig(browserConfig.windowConfig)
+
+    this.windowConfig = windowConfig
+    this.screenConfig = screenConfig
+    this.userAgent = browserConfig.userAgent
+
+    Object.defineProperties(this, {
+      windowManager: { value: new WindowManager() },
+      contentManager: { value: new ContentManager() },
+    })
   }
 
-  configure (window, browserConfig) {
-    if (this.windowObject) {
-      return
-    }
-
-    let screenCfg,
-        windowCfg
-
-    if (browserConfig instanceof BrowserConfig) {
-      screenCfg = copyProps(browserConfig.screenConfig)
-      windowCfg = copyProps(browserConfig.windowConfig)
-    } else {
-      screenCfg = copyProps(defaultConfig.screenConfig)
-      windowCfg = copyProps(defaultConfig.windowConfig)
-
-      if (browserConfig) {
-        copyProps(browserConfig.screenConfig, screenCfg)
-        copyProps(browserConfig.windowConfig, windowCfg)
+  getConfig (object) {
+    switch (Object.prototype.toString.call(object)) {
+      case '[object Window]': {
+        return this.windowManager.getConfig(object)
+      }
+      case '[object Screen]': {
+        return this.screenConfig
       }
     }
+  }
 
-    screenCfg = new this.ScreenConfig(screenCfg)
-    Object.defineProperty(this, 'screenConfig', { value: screenCfg })
+  getWindow (key) {
+    return this.windowManager.get(key)
+  }
 
-    if (!(windowCfg.screen instanceof Screen)) {
-      windowCfg.screen = new Screen(screenCfg)
-    }
+  addContent (url, content) {
+    this.contentManager.add(url, content)
+  }
 
-    windowCfg = new this.WindowConfig(windowCfg)
-    Object.defineProperty(this, 'windowConfig', { value: windowCfg })
+  newWindow () {
+    return newWindow(this)
+  }
 
-    windowCfg.configure(window)
-    Object.defineProperty(this, 'windowObject', { value: window })
+  openWindow (url) {
+    return openWindow(url, this)
   }
 }
 
-Object.defineProperty(BrowserConfig, 'ScreenConfig', { value: ScreenConfig })
-Object.defineProperty(BrowserConfig, 'WindowConfig', { value: WindowConfig })
-
-module.exports = BrowserConfig
+module.exports = Browser
