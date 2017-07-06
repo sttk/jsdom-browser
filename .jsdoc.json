@@ -4,7 +4,7 @@
     "dictionaries": ["jsdoc", "closure"]
   },
   "opts": {
-    "access": "all",
+    "access": "public",
     "encoding": "utf8",
     "destination": "docs/",
     "recurse": true
