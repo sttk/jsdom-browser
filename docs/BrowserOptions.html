@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>jsdom-browser Index</title>
+	<title>jsdom-browser Class: BrowserOptions</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -33,7 +33,14 @@
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="Browser.html">Browser</a></li><li><a href="Screen.html">Screen</a></li><li><a href="ScreenConfig.html">ScreenConfig</a></li><li><a href="Window.html">Window</a></li><li><a href="WindowConfig.html">WindowConfig</a></li>
+					<li><a href="Browser.html">Browser</a></li><li><a href="BrowserOptions.html">BrowserOptions</a></li><li><a href="ContentManager.html">ContentManager</a></li><li><a href="Screen.html">Screen</a></li><li><a href="ScreenConfig.html">ScreenConfig</a></li><li><a href="Window.html">Window</a></li><li><a href="WindowConfig.html">WindowConfig</a></li><li><a href="WindowManager.html">WindowManager</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#applyFeatures">applyFeatures</a></li><li><a href="global.html#clearHistory">clearHistory</a></li><li><a href="global.html#configureOpening">configureOpening</a></li><li><a href="global.html#createBlankWindow">createBlankWindow</a></li><li><a href="global.html#newWindow">newWindow</a></li><li><a href="global.html#openWindow">openWindow</a></li><li><a href="global.html#parseFeatures">parseFeatures</a></li><li><a href="global.html#promiseToLoadContent">promiseToLoadContent</a></li>
 				</ul>
 			</li>
 			
@@ -65,77 +72,254 @@
 		<div id="main">
 			
 
+	<h1 class="page-title">Class: BrowserOptions</h1>
+<section>
+
+<header>
+    
+        <h2>
+        BrowserOptions
+        </h2>
+        
+            <div class="class-description"><p>This is the class to have a browser options.</p></div>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+<hr>
+<dt>
+    <h4 class="name" id="BrowserOptions"><span class="type-signature"></span>new BrowserOptions(initOptions)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Create a new instance of this class.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>initOptions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">options</span>
+|
+
+<span class="param-type"><a href="BrowserOptions.html">BrowserOptions</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>An object to initialize a new instance.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>userAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>An user agent string.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>runScripts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A string which is passed to JSDOM to enable to run scripts.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
 	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
 	
 
 
 
+	
+
+	
+
+	
+
+	
+</dl>
 
 
-    <section class="readme-section">
-        <article><h1><a href="https://github.com/sttk/jsdom-browser/">jsdom-browser</a> <a href="https://sttk.github.io/jsdom-browser/"><img src="http://img.shields.io/badge/HP-github.io-ff99cc.svg" alt="Github.io"></a> <a href="https://www.npmjs.org/package/jsdom-browser/"><img src="https://img.shields.io/badge/npm-v0.5.0-blue.svg" alt="NPM"></a> <a href="https://opensource.org/licenses.MIT"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT Licenses"></a> <a href="https://travis-ci.org/sttk/jsdom-browser"><img src="https://travis-ci.org/sttk/jsdom-browser.svg?branch=master" alt="Build Status"></a> <a href="https://ci.appveyor.com/project/sttk/jsdom-browser"><img src="https://ci.appveyor.com/api/projects/status/github/sttk/jsdom-browser?branch=master&amp;svg=true" alt="Build Status"></a> <a href="https://coveralls.io/github/sttk/jsdom-browser?branch=master"><img src="https://coveralls.io/repos/github/sttk/jsdom-browser/badge.svg?branch=master" alt="Coverage Status"></a></h1><p>This module simulates behaviors of a Web browser with <a href="https://github.com/tmpvar/jsdom">jsdom</a>, and will provides implementations about layouts of view elements and windows.</p>
-<blockquote>
-<p>This module simulates Chrome on macOS for the time being, but is implemented so as to be configurable and extendable to other browsers.</p>
-</blockquote>
-<h2>Install</h2><pre class="prettyprint source lang-sh"><code>$ npm install jsdom-browser --save-dev</code></pre><h2>Usage</h2><h3>Create a browser</h3><pre class="prettyprint source lang-js"><code>const Browser = require('jsdom-browser')
-const browser = new Browser()</code></pre><h3>Open a blank window</h3><pre class="prettyprint source lang-js"><code>const window0 = browser.newWindow()
+    
 
-window0.name = 'win0'</code></pre><h3>Get a window config</h3><pre class="prettyprint source lang-js"><code>const windowConfig0 = browser.getConfig(window0)
-windowConfig0.top = 200
-windowConfig0.left = 300
+    
 
-window0.screenX // => 300
-window0.screenY // => 200</code></pre><h3>Get a window already opened</h3><pre class="prettyprint source lang-js"><code>window0 === browser.getWindow(0)  // by index
-window0 === browser.getWidnow('win0') // by name
-window0 === browser.getWindow(windowConfig0) // by window config</code></pre><h3>Open a window with loading a page content</h3><pre class="prettyprint source lang-js"><code>browser.addContent('http://www.example.com', '&lt;p>Hello!&lt;/p>')
+    
 
-const window1 = browser.openWindow('http://www.example.com')
+    
 
-window1.addEventListener('load', event => {
-  // Called after loading content.
-})
+    
 
-const config1 = browser.getConfig(window1)
-config1.on('load', (err, win, cfg) => {
-  // Called after loading content.
-})</code></pre><h3>Open a child window</h3><pre class="prettyprint source lang-js"><code>browser.addContent('http://sample.net', '&lt;html> ... &lt;/html>')
+    
 
-const window2 = window.open('http://sample.net', '_blank', 'top=100,left=200,height=300,width=400')
+    
+</dd>
 
-window2.addEventListener('load', event => {
-  // Called after loading content.
-})
+    
+    </div>
 
-const config2 = browser.getConfig(window2)
-config2.on('load', (err, win, cfg) => {
-  // Called after loading content.
-})</code></pre><h2>Progress</h2><ul>
-<li><a href="https://www.w3.org/TR/cssom-view-1/#screen">Screen</a> &#x2713;</li>
-<li><a href="https://www.w3.org/TR/screen-orientation/">ScreenOrientation</a> <em>(Not yet)</em></li>
-<li><a href="https://www.w3.org/TR/cssom-view-1/#extensions-to-the-window-interface">Window</a><ul>
-<li>screen &#x2713;</li>
-<li>innerWidth, innerHeight, outerWidth, outerHeight, screenX, screenY,
-devicePixelRatio &#x2713;</li>
-<li>scrollX, scrollY, pageXOffset, pageYOffset &#x2713;</li>
-<li>moveTo, moveBy, resizeTo, resizeBy &#x2713;</li>
-<li>scroll, scrollTo, scrollBy  &#x2713;</li>
-<li>open, close  &#x2713;</li>
-<li><em>matchMedia (Not yet)</em></li>
-</ul>
-</li>
-<li>And planning more HTMLElements ...</li>
-</ul>
-<h2>References</h2><ul>
-<li><a href="https://www.w3.org/TR/cssom-view-1">CSSOM View Modules</a></li>
-<li><a href="https://html.spec.whatwg.org/multipage/">HTML Living Standard</a></li>
-</ul>
-<h2>License</h2><p>Copyright (C) 2017 Takayuki Sato</p>
-<p>This program is free software under <a href="https://opensource.org/licenses.MIT">MIT</a> License.
-See the file LICENSE in this distribution for more details.</p></article>
-    </section>
+    
 
+    
 
+    
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -177,7 +361,7 @@ See the file LICENSE in this distribution for more details.</p></article>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.1</a>
 	
-		on 2017/07/14 08:34:45
+		on 2017/07/14 08:34:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

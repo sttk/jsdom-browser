@@ -4,30 +4,35 @@
           max-statements: ['error', 50], max-len: ['error', 100]*/
 
 const expect = require('chai').expect
-const { JSDOM } = require('jsdom')
 const { configureOpening, newWindow, openWindow } = require('./opening')
+const { createBlankWindow } = require('../jsdom')
 const WindowConfig = require('./config')
 const WindowManager = require('./manager')
 const ContentManager = require('./content')
 
 const windowManager = new WindowManager()
 const contentManager = new ContentManager()
-const browser = { windowManager, contentManager }
+const browserOpts = { userAgent: 'Mozilla/5.0 AAA', runScripts: 'dangerously' }
+const baseWindowConfig = new WindowConfig()
+
+const browser = {
+  windowManager,
+  contentManager,
+  options: browserOpts,
+  windowConfig: baseWindowConfig,
+}
 
 function createWindow () {
-  const window = new JSDOM().window
-  window.name = 'win-self'
+  const window = createBlankWindow('win-self', browserOpts)
   const config = new WindowConfig()
   config.configure(window)
   windowManager.set(window, config)
   configureOpening(window, browser)
 
-  const parent = new JSDOM().window
-  parent.name = 'win-parent'
+  const parent = createBlankWindow('win-parent', browserOpts)
   window._parent = parent
 
-  const top = new JSDOM().window
-  top.name = 'win-top'
+  const top = createBlankWindow('win-top', browserOpts)
   window._top = top
 
   return window
@@ -319,11 +324,8 @@ describe('window/opening', () => {
     it('Should open a frame window with loading a page content', done => {
       browser.contentManager.add('http://sample.com', '<p>Sample</p>')
 
-      const win0 = new JSDOM().window
-      const cfg0 = new WindowConfig()
-      cfg0.configure(win0)
-      windowManager.set(win0, cfg0)
-      configureOpening(win0, browser)
+      const win0 = createWindow()
+      const cfg0 = windowManager.getConfig(win0)
 
       cfg0.top = 30
       cfg0.left = 40
@@ -362,11 +364,8 @@ describe('window/opening', () => {
     it('Should open a popup window with resizing and shift position', done => {
       browser.contentManager.add('http://sample.com', '<p>Sample</p>')
 
-      const win0 = new JSDOM().window
-      const cfg0 = new WindowConfig()
-      cfg0.configure(win0)
-      windowManager.set(win0, cfg0)
-      configureOpening(win0, browser)
+      const win0 = createWindow()
+      const cfg0 = windowManager.getConfig(win0)
 
       cfg0.top = 30
       cfg0.left = 40
@@ -412,11 +411,8 @@ describe('window/opening', () => {
     it('Should open a popup window with moving', done => {
       browser.contentManager.add('http://sample.com/aaa', '<p>Sample</p>')
 
-      const win0 = new JSDOM().window
-      const cfg0 = new WindowConfig()
-      cfg0.configure(win0)
-      windowManager.set(win0, cfg0)
-      configureOpening(win0, browser)
+      const win0 = createWindow()
+      const cfg0 = windowManager.getConfig(win0)
 
       cfg0.top = 30
       cfg0.left = 40
@@ -456,11 +452,8 @@ describe('window/opening', () => {
     done => {
       browser.contentManager.add('http://sample.com/aaa', '<p>Sample</p>')
 
-      const win0 = new JSDOM().window
-      const cfg0 = new WindowConfig()
-      cfg0.configure(win0)
-      windowManager.set(win0, cfg0)
-      configureOpening(win0, browser)
+      const win0 = createWindow()
+      const cfg0 = windowManager.getConfig(win0)
 
       cfg0.top = 33
       cfg0.left = 44
@@ -506,11 +499,8 @@ describe('window/opening', () => {
     it('Should open a named popup window even if features is empty', done => {
       browser.contentManager.add('http://sample.com/aaa', '<p>Sample</p>')
 
-      const win0 = new JSDOM().window
-      const cfg0 = new WindowConfig()
-      cfg0.configure(win0)
-      windowManager.set(win0, cfg0)
-      configureOpening(win0, browser)
+      const win0 = createWindow()
+      const cfg0 = windowManager.getConfig(win0)
 
       cfg0.top = 30
       cfg0.left = 40
@@ -558,11 +548,7 @@ describe('window/opening', () => {
     it('Should open a new window but the content is bad', done => {
       browser.contentManager.add('http://sample.com/bad', '<p')
 
-      const win0 = new JSDOM().window
-      const cfg0 = new WindowConfig()
-      cfg0.configure(win0)
-      windowManager.set(win0, cfg0)
-      configureOpening(win0, browser)
+      const win0 = createWindow()
 
       const win1 = win0.open('http://sample.com/bad')
       const cfg1 = windowManager.getConfig(win1)
@@ -583,8 +569,6 @@ describe('window/opening', () => {
 
   describe('newWindow', () => {
     it('Should create a new window', () => {
-      const windowConfig = new WindowConfig()
-      const browser = { windowConfig, windowManager, contentManager }
       const win = newWindow(browser)
       const cfg = browser.windowManager.getConfig(win)
       expect(win).to.exist
@@ -595,8 +579,6 @@ describe('window/opening', () => {
 
   describe('openWindow', () => {
     it('Should create a new window and load a content', done => {
-      const windowConfig = new WindowConfig()
-      const browser = { windowConfig, windowManager, contentManager }
       const win = openWindow('http://sample.com', browser)
       const cfg = browser.windowManager.getConfig(win)
       expect(win).to.exist
@@ -614,8 +596,6 @@ describe('window/opening', () => {
     })
 
     it('Should create a new window and not loading', done => {
-      const windowConfig = new WindowConfig()
-      const browser = { windowConfig, windowManager, contentManager }
       const win = openWindow(null, browser)
       const cfg = browser.windowManager.getConfig(win)
       expect(win).to.exist

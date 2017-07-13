@@ -33,7 +33,7 @@
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="Browser.html">Browser</a></li><li><a href="ContentManager.html">ContentManager</a></li><li><a href="Screen.html">Screen</a></li><li><a href="ScreenConfig.html">ScreenConfig</a></li><li><a href="Window.html">Window</a></li><li><a href="WindowConfig.html">WindowConfig</a></li><li><a href="WindowManager.html">WindowManager</a></li>
+					<li><a href="Browser.html">Browser</a></li><li><a href="BrowserOptions.html">BrowserOptions</a></li><li><a href="ContentManager.html">ContentManager</a></li><li><a href="Screen.html">Screen</a></li><li><a href="ScreenConfig.html">ScreenConfig</a></li><li><a href="Window.html">Window</a></li><li><a href="WindowConfig.html">WindowConfig</a></li><li><a href="WindowManager.html">WindowManager</a></li>
 				</ul>
 			</li>
 			
@@ -498,7 +498,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="configureOpening"><span class="type-signature"></span>configureOpening(window, managerSet)</h4>
+    <h4 class="name" id="configureOpening"><span class="type-signature"></span>configureOpening(window, browser)</h4>
     
     
 </dt>
@@ -565,13 +565,13 @@
 
         <tr>
             
-                <td class="name"><code>managerSet</code></td>
+                <td class="name"><code>browser</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type"><a href="Browser.html">Browser</a></span>
 
 
 
@@ -582,7 +582,7 @@
 
             
 
-            <td class="description last"><p>An object which has a <a href="WindowManager.html">WindowManager</a> object and a <a href="ContentManager.html">ContentManager</a> object as its properties.</p></td>
+            <td class="description last"><p>An object which represents a Web browser and has a base <a href="WindowConfig.html">WindowConfig</a> object, a <a href="WindowManager.html">WindowManager</a> object, a <a href="ContentManager.html">ContentManager</a> object and <a href="BrowserOptions.html">BrowserOptions</a> as its properties.</p></td>
         </tr>
 
     
@@ -661,7 +661,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="createBlankWindow"><span class="type-signature"></span>createBlankWindow(name, opts)</h4>
+    <h4 class="name" id="createBlankWindow"><span class="type-signature"></span>createBlankWindow(name, opener, opts)</h4>
     
     
 </dt>
@@ -671,7 +671,7 @@
     <div class="description">
         <p>Create a blank window of which URL is 'about:blank'.</p>
 <p>If <em>name</em> is neither a string nor nullish, the window name become a string by <em>String(name)</em>.</p>
-<p>If the 2nd argument is an <a href="Window.html">Window</a> object, its URL, userAgent and itself is set to referrer, userAgent and opener of the new window.</p>
+<p>The 2nd argument is an opener window and its <code>location.href</code> and <code>document.referrer</code> are used for constructing JSDOM. But if it is not a Window object and the 3rd argument is not specified, it is dealt as a JSDOM options.</p>
     </div>
     
 
@@ -723,7 +723,31 @@
 
             
 
-            <td class="description last"><p>The window name. (default is '')</p></td>
+            <td class="description last"><p>The window name. (optional, default is '')</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opener</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Window.html">Window</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>An opener window (optional)</p></td>
         </tr>
 
     
@@ -737,9 +761,6 @@
             
                 
 <span class="param-type">object</span>
-|
-
-<span class="param-type"><a href="Window.html">Window</a></span>
 
 
 
@@ -750,7 +771,7 @@
 
             
 
-            <td class="description last"><p>An object which has properties <code>.referrer</code> and <code>.userAgent</code>, or an opener window.</p></td>
+            <td class="description last"><p>An JSDOM options. (optional)</p></td>
         </tr>
 
     
@@ -892,7 +913,7 @@ And this function creates a <a href="WindowConfig.html">WindowConfig</a> object,
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type"><a href="Browser.html">Browser</a></span>
 
 
 
@@ -903,7 +924,7 @@ And this function creates a <a href="WindowConfig.html">WindowConfig</a> object,
 
             
 
-            <td class="description last"><p>An object which represents a Web browser and has an userAgent string, a <a href="WindowConfig.html">WindowConfig</a> object, a <a href="WindowManager.html">WindowManager</a> object and a <a href="ContentManager.html">ContentManager</a> object as its properties.</p></td>
+            <td class="description last"><p>An object which represents a Web browser and has a base <a href="WindowConfig.html">WindowConfig</a> object, a <a href="WindowManager.html">WindowManager</a> object, a <a href="ContentManager.html">ContentManager</a> object and <a href="BrowserOptions.html">BrowserOptions</a> as its properties.</p></td>
         </tr>
 
     
@@ -1056,7 +1077,7 @@ And this function creates a <a href="WindowConfig.html">WindowConfig</a> object,
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type"><a href="Browser.html">Browser</a></span>
 
 
 
@@ -1067,7 +1088,7 @@ And this function creates a <a href="WindowConfig.html">WindowConfig</a> object,
 
             
 
-            <td class="description last"><p>An object which represents a Web browser and has an userAgent string, a <a href="WindowConfig.html">WindowConfig</a> object, a <a href="WindowManager.html">WindowManager</a> object and a <a href="ContentManager.html">ContentManager</a> object as its properties.</p></td>
+            <td class="description last"><p>An object which represents a Web browser and has a base <a href="WindowConfig.html">WindowConfig</a> object, a <a href="WindowManager.html">WindowManager</a> object, a <a href="ContentManager.html">ContentManager</a> object and <a href="BrowserOptions.html">BrowserOptions</a> as its properties.</p></td>
         </tr>
 
     
@@ -1557,7 +1578,7 @@ And this function creates a <a href="WindowConfig.html">WindowConfig</a> object,
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.1</a>
 	
-		on 2017/07/13 08:38:51
+		on 2017/07/14 08:33:59
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

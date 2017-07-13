@@ -7,6 +7,7 @@ const WindowConfig = require('./window/config')
 const { newWindow, openWindow } = require('./window/opening')
 const ScreenConfig = require('./screen/config')
 const Screen = require('./screen')
+const BrowserOptions = require('./options')
 const defaultConfig = require('./default')
 
 class Browser {
@@ -20,9 +21,12 @@ class Browser {
     browserConfig.windowConfig.screen = screen
     const windowConfig = new WindowConfig(browserConfig.windowConfig)
 
+    const browserOptions = new BrowserOptions(browserConfig.options)
+
+
     this.windowConfig = windowConfig
     this.screenConfig = screenConfig
-    this.userAgent = browserConfig.userAgent
+    this.options = browserOptions
 
     Object.defineProperties(this, {
       windowManager: { value: new WindowManager() },

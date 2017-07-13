@@ -7,10 +7,9 @@ const {
 } = require('../jsdom')
 
 
-function configureOpening (window, { windowManager, contentManager }) {
+function configureOpening (window, browser) {
   const originalClose = window.close.bind(window)
-  const config = windowManager.getConfig(window)
-  const managerSet = arguments[1]
+  const config = browser.windowManager.getConfig(window)
 
   Object.defineProperties(window, {
     closed: replaceable({
@@ -27,8 +26,8 @@ function configureOpening (window, { windowManager, contentManager }) {
         return
       }
 
-      const { win, isNew } = resolveTarget(target, window, windowManager)
-      const cfg = getConfig(win, config, managerSet)
+      const { win, isNew } = resolveTarget(target, window, browser)
+      const cfg = getConfig(win, config, browser)
       applyFeatures(cfg, parseFeatures(features), isNew)
 
       const isLoading = !(url == null || url === '')
@@ -36,7 +35,7 @@ function configureOpening (window, { windowManager, contentManager }) {
         if (isNew) {
           clearHistory(win)
         }
-        loadContentAsync(win, cfg, url, contentManager)
+        loadContentAsync(win, cfg, url, browser.contentManager)
       }
 
       return win
@@ -44,7 +43,7 @@ function configureOpening (window, { windowManager, contentManager }) {
   })
 }
 
-function resolveTarget (target, opener, windowManager) {
+function resolveTarget (target, opener, browser) {
   if (target == null || target === '') {
     target = '_blank'
   } else {
@@ -62,31 +61,33 @@ function resolveTarget (target, opener, windowManager) {
       return { win: opener.top }
     }
     case '_blank': {
-      return { win: createBlankWindow('', opener), isNew: true }
+      const win = createBlankWindow('', opener, browser.options)
+      return { win, isNew: true }
     }
     default: {
-      const win = windowManager.get(target)
+      let win = browser.windowManager.get(target)
       if (win) {
         return { win }
       }
 
-      return { win: createBlankWindow(target, opener), isNew: true }
+      win = createBlankWindow(target, opener, browser.options)
+      return { win, isNew: true }
     }
   }
 }
 
-function getConfig (win, baseConfig, managerSet) {
-  return managerSet.windowManager.getConfig(win) ||
-         newConfig(win, baseConfig, managerSet)
+function getConfig (win, baseConfig, browser) {
+  return browser.windowManager.getConfig(win) ||
+         newConfig(win, baseConfig, browser)
 }
 
-function newConfig (win, baseConfig, managerSet) {
+function newConfig (win, baseConfig, browser) {
   const ctor = baseConfig.constructor
   const cfg = new ctor(baseConfig)
 
   cfg.configure(win)
-  managerSet.windowManager.set(win, cfg)
-  configureOpening(win, managerSet)
+  browser.windowManager.set(win, cfg)
+  configureOpening(win, browser)
 
   return cfg
 }
@@ -101,13 +102,13 @@ function loadContentAsync (win, cfg, url, contentManager) {
 
 
 function newWindow (browser) {
-  const win = createBlankWindow('', browser)
+  const win = createBlankWindow('', browser.options)
   newConfig(win, browser.windowConfig, browser)
   return win
 }
 
 function openWindow (url, browser) {
-  const win = createBlankWindow('', browser)
+  const win = createBlankWindow('', browser.options)
   const cfg = newConfig(win, browser.windowConfig, browser)
 
   const isLoading = !(url == null || url === '')

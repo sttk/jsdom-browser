@@ -25,7 +25,7 @@ fun.jsdoc.description = 'Create API document.'
 
 
 fun.test = () =>
-  gulp.src(['src/**/*.test.js'])
+  gulp.src(['src/**/*.test.js', 'test/**/*.test.js'])
       .pipe(plumber())
       .pipe(mocha())
 
@@ -33,7 +33,7 @@ fun.test.description = 'Run the unit tests.'
 
 
 fun.coverage = () =>
-  gulp.src(['src/**/*.test.js'])
+  gulp.src(['src/**/*.test.js', 'test/**/*.test.js'])
       .pipe(plumber())
       .pipe(mocha({ istanbul: true }))
 

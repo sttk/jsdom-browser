@@ -1,15 +1,20 @@
 'use strict'
 
+require('./enable-to-run-scripts')
+
 const { JSDOM } = require('jsdom')
 const defaultValue = require('default-val')
+const defaults = require('lodash.defaults')
 
-function createBlankWindow (name = '', opts) {
-  const opener = defaultValue(opts, null, '[object Window]')
-  if (opener) {
-    opts = inheritOptions(opts)
-  } else {
-    opts = filterOptions(opts)
+
+function createBlankWindow (name = '', opener, opts) {
+  opener = defaultValue(opener, null, '[object Window]')
+
+  if (!opener && !opts) {
+    opts = arguments[1]
   }
+
+  opts = defaultOptions(opts, inheritOptions(opener))
 
   // Suppress firing "load" event in jsdom/lib/jsdom/browser/Window.js.
   process.nextTick(() => { detachDocument() })
@@ -33,19 +38,24 @@ function createBlankWindow (name = '', opts) {
 }
 
 function inheritOptions (window) {
-  return filterOptions({
-    referrer: window.location.href,
-    userAgent: window.navigator.userAgent,
-  })
+  if (window) {
+    return {
+      referrer: window.location.href,
+      userAgent: window.navigator.userAgent,
+    }
+  }
 }
 
-function filterOptions (opts) {
-  opts = opts || {}
-  return {
-    referrer: defaultValue(opts.referrer, undefined, '[object String]'),
-    userAgent: defaultValue(opts.userAgent, ''),
-    url: 'about:blank',
+function defaultOptions (opts, defs) {
+  if (opts) {
+    opts = {
+      url: 'about:blank',
+      referrer: defaultValue(opts.referrer, undefined, '[object String]'),
+      userAgent: defaultValue(opts.userAgent, ''),
+      runScripts: defaultValue(opts.runScripts, undefined, '[object String]'),
+    }
   }
+  return defaults(opts, defs, { userAgent: '' })
 }
 
 function redefineDocument (win) {

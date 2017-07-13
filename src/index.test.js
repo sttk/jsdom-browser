@@ -77,6 +77,7 @@ describe('browser', () => {
         contentType: 'text/html',
         encoding: 'UTF-8',
       }
+      const userAgent = defaultConfig.options.userAgent
 
       const browser = new Browser()
       browser.addContent('http://hello.com', content0)
@@ -99,7 +100,7 @@ describe('browser', () => {
         expect(window0.document.lastModified).to.equal(undefined)
         expect(window0.document.referrer).to.equal('')
         expect(window0.location.href).to.equal('http://hello.com/')
-        expect(window0.navigator.userAgent).to.equal(defaultConfig.userAgent)
+        expect(window0.navigator.userAgent).to.equal(userAgent)
         end(err)
       })
 
