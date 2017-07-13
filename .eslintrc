@@ -73,7 +73,7 @@
       "allowUnboundThis": true
     }],
     "prefer-const": "error",
-    "prefer-rest-params": "error",
+    "prefer-rest-params": "off",
     "prefer-template": "error",
     "template-curly-spacing": "error"
   }

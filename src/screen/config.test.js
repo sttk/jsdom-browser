@@ -3,7 +3,7 @@
 /* eslint max-statements: ["error", 100] */
 
 const expect = require('chai').expect
-const ScreenConfig = require('../../src/screen/config')
+const ScreenConfig = require('./config')
 
 
 describe('screen/config', () => {

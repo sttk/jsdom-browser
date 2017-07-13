@@ -1,7 +1,7 @@
 'use strict'
 
 const expect = require('chai').expect
-const { createBlankWindow } = require('../../src/jsdom')
+const { createBlankWindow } = require('.')
 const { JSDOM } = require('jsdom')
 
 describe('jsdom/create-blank-window', () => {

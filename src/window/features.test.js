@@ -1,10 +1,10 @@
 'use strict'
 
 const expect = require('chai').expect
-const { parseFeatures, applyFeatures } = require('../../src/window/features')
-const WindowConfig = require('../../src/window/config')
-const ScreenConfig = require('../../src/screen/config')
-const Screen = require('../../src/screen')
+const { parseFeatures, applyFeatures } = require('./features')
+const WindowConfig = require('./config')
+const ScreenConfig = require('../screen/config')
+const Screen = require('../screen')
 
 describe('window/features', () => {
 

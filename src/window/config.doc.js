@@ -1,13 +1,11 @@
 /**
-
+@public
 @constructor WindowConfig
 @param initConfig {object | WindowConfig} An object to initialize a new instance.
 @desc
-
 Creates a new instance of this class.
 
 @classdesc
-
 This is the class to configure a Window object provided by [jsdom](https://github.com/tmpvar/jsdom).
 
 This class provides the properties and the methods for positioning, resizing, opening and closing to a Window object.
@@ -56,41 +54,30 @@ This class provides the properties and the methods for positioning, resizing, op
 @prop minOpeningSize.height {number} The minimum height of the window associated with this object when opening. This property switches the value by frame or popup.
 @prop isMovableByScript {boolean} The flag to specify that the window associated with this object is movable by script.
 @prop isResizableByScript {boolean} The flag to specify that the window associated with this object is resizable by script.
-
-@public
 */
 
 /**
-
+@public
 @method WindowConfig#on
 @param eventName {string} A event name.
 @param listener {function} A event listener.
 @desc
-
 Adds an event listener called as executing the specified window operation.
-
-@public
 */
 
 /**
-
+@public
 @method WindowConfig#once
 @param eventName {string} A event name.
 @param listener {function} A event listener.
 @desc
-
 Adds an event listener called once as executing the specified window operation.
-
-@public
 */
 
 /**
-
+@public
 @method WindowConfig#configure
 @param window {Window} A Window object to be configured by this object.
 @desc
-
 Configures a Window object.
-
-@public
 */

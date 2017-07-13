@@ -1,7 +1,5 @@
 'use strict'
 
-/* eslint prefer-rest-params: "off" */
-
 const { replaceable, method } = require('../util/config-base')
 const { parseFeatures, applyFeatures } = require('./features')
 const {

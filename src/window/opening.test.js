@@ -5,12 +5,10 @@
 
 const expect = require('chai').expect
 const { JSDOM } = require('jsdom')
-const {
-  configureOpening, newWindow, openWindow
-} = require('../../src/window/opening')
-const WindowConfig = require('../../src/window/config')
-const WindowManager = require('../../src/window/manager')
-const ContentManager = require('../../src/window/content')
+const { configureOpening, newWindow, openWindow } = require('./opening')
+const WindowConfig = require('./config')
+const WindowManager = require('./manager')
+const ContentManager = require('./content')
 
 const windowManager = new WindowManager()
 const contentManager = new ContentManager()
