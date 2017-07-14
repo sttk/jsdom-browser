@@ -111,7 +111,7 @@ See the file LICENSE in this distribution for more details.
 [repo-url]: https://github.com/sttk/jsdom-browser/
 [io-image]: http://img.shields.io/badge/HP-github.io-ff99cc.svg
 [io-url]: https://sttk.github.io/jsdom-browser/
-[npm-img]: https://img.shields.io/badge/npm-v0.5.0-blue.svg
+[npm-img]: https://img.shields.io/badge/npm-v0.5.1-blue.svg
 [npm-url]: https://www.npmjs.org/package/jsdom-browser/
 [mit-img]: https://img.shields.io/badge/license-MIT-green.svg
 [mit-url]: https://opensource.org/licenses.MIT

@@ -1,8 +1,12 @@
 {
   "name": "jsdom-browser",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Web browser simulator with jsdom.",
   "main": "src/index.js",
+  "files": [
+    "src",
+    "!src/**/*.+(doc|test).js"
+  ],
   "scripts": {
     "test": "gulp test",
     "coveralls": "gulp coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
