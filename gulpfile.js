@@ -56,3 +56,5 @@ fun.watch = ['watch_test', 'watch_doc']
 
 fun.watch.description = 'Watch file changes, then lint, test or jsdoc'
 
+
+fun.default = [['lint', 'coverage', 'jsdoc']]
