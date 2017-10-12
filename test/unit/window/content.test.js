@@ -1,7 +1,7 @@
 'use strict'
 
 const expect = require('chai').expect
-const ContentManager = require('./content')
+const ContentManager = require('../../../src/window/content')
 
 describe('window/content', () => {
 

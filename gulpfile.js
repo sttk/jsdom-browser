@@ -17,7 +17,7 @@ fun.lint.description = 'Lint js source files.'
 
 
 fun.jsdoc = done =>
-  gulp.src(['src/**/*.doc.js', 'README.md'])
+  gulp.src(['docs/src/**/*.js', 'README.md'])
       .pipe(plumber())
       .pipe(jsdoc(require('./.jsdoc.json'), done))
 
@@ -47,7 +47,7 @@ fun.watch_test = {
 
 
 fun.watch_doc = {
-  watch: ['src/**/*.doc.js', 'README.md'],
+  watch: ['docs/src/**/*.js', 'README.md'],
   call: [['jsdoc']]
 }
 

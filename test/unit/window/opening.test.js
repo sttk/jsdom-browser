@@ -1,14 +1,13 @@
 'use strict'
 
-/* eslint max-nested-callbacks: ['error', 5],
-          max-statements: ['error', 50], max-len: ['error', 100]*/
-
 const expect = require('chai').expect
-const { configureOpening, newWindow, openWindow } = require('./opening')
-const { createBlankWindow } = require('../jsdom')
-const WindowConfig = require('./config')
-const WindowManager = require('./manager')
-const ContentManager = require('./content')
+const {
+  configureOpening, newWindow, openWindow
+} = require('../../../src/window/opening')
+const { createBlankWindow } = require('../../../src/jsdom')
+const WindowConfig = require('../../../src/window/config')
+const WindowManager = require('../../../src/window/manager')
+const ContentManager = require('../../../src/window/content')
 
 const windowManager = new WindowManager()
 const contentManager = new ContentManager()

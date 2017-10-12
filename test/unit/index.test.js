@@ -1,14 +1,14 @@
 'use strict'
 
 const expect = require('chai').expect
-const Browser = require('.')
+const Browser = require('../../src')
 
-const WindowManager = require('./window/manager')
-const ContentManager = require('./window/content')
-const WindowConfig = require('./window/config')
-const ScreenConfig = require('./screen/config')
-const Screen = require('./screen')
-const defaultConfig = require('./default')
+const WindowManager = require('../../src/window/manager')
+const ContentManager = require('../../src/window/content')
+const WindowConfig = require('../../src/window/config')
+const ScreenConfig = require('../../src/screen/config')
+const Screen = require('../../src/screen')
+const defaultConfig = require('../../src/default')
 
 describe('browser', () => {
 

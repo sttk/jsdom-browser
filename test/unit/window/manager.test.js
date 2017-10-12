@@ -1,8 +1,8 @@
 'use strict'
 
 const expect = require('chai').expect
-const WindowManager = require('./manager')
-const WindowConfig = require('./config')
+const WindowManager = require('../../../src/window/manager')
+const WindowConfig = require('../../../src/window/config')
 
 describe('window/manager', () => {
 

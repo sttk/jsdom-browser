@@ -1,9 +1,7 @@
 'use strict'
 
-/* eslint max-statements: ["error", 100] */
-
 const expect = require('chai').expect
-const ScreenConfig = require('./config')
+const ScreenConfig = require('../../../src/screen/config')
 
 
 describe('screen/config', () => {

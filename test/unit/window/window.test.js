@@ -1,11 +1,9 @@
 'use strict'
 
-/* eslint max-statements: ['error', 100], max-nested-callbacks: ['error', 4] */
-
 const expect = require('chai').expect
-const WindowConfig = require('./config')
-const ScreenConfig = require('../screen/config')
-const Screen = require('../screen')
+const WindowConfig = require('../../../src/window/config')
+const ScreenConfig = require('../../../src/screen/config')
+const Screen = require('../../../src/screen')
 const { JSDOM } = require('jsdom')
 
 describe('window', () => {

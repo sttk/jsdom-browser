@@ -4,8 +4,7 @@
   "description": "Web browser simulator with jsdom.",
   "main": "src/index.js",
   "files": [
-    "src",
-    "!src/**/*.+(doc|test).js"
+    "src"
   ],
   "scripts": {
     "test": "gulp test",

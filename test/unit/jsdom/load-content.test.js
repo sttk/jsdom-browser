@@ -1,7 +1,9 @@
 'use strict'
 
 const expect = require('chai').expect
-const { createBlankWindow, promiseToLoadContent, clearHistory } = require('.')
+const {
+  createBlankWindow, promiseToLoadContent, clearHistory
+} = require('../../../src/jsdom')
 
 describe('jsdom/promise-to-load-content', () => {
 

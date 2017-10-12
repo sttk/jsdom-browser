@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "max-nested-callbacks": ["error", 5],
+    "max-statements": ["error", 100],
+    "max-len": ["error", 100]
+  }
+}
