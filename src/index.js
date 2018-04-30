@@ -13,20 +13,10 @@ const defaultConfig = require('./default')
 class Browser {
 
   constructor (browserConfig) {
-    browserConfig = copyProps(browserConfig, copyProps(defaultConfig, {}))
-
-    const screenConfig = new ScreenConfig(browserConfig.screenConfig)
-    const screen = new Screen(screenConfig)
-
-    browserConfig.windowConfig.screen = screen
-    const windowConfig = new WindowConfig(browserConfig.windowConfig)
-
-    const browserOptions = new BrowserOptions(browserConfig.options)
-
-
+    const { windowConfig, screenConfig, options } = newConfig(browserConfig)
     this.windowConfig = windowConfig
     this.screenConfig = screenConfig
-    this.options = browserOptions
+    this.options = options
 
     Object.defineProperties(this, {
       windowManager: { value: new WindowManager() },
@@ -60,6 +50,26 @@ class Browser {
   openWindow (url) {
     return openWindow(url, this)
   }
+}
+
+function newConfig (browserConfig) {
+  const config = copyProps(defaultConfig, {})
+
+  if (browserConfig) {
+    Object.keys(browserConfig).forEach(prop => {
+      config[prop] = copyProps(browserConfig[prop], config[prop])
+    })
+  }
+
+  const screenConfig = new ScreenConfig(config.screenConfig)
+  const screen = new Screen(screenConfig)
+
+  config.windowConfig.screen = screen
+  const windowConfig = new WindowConfig(config.windowConfig)
+
+  const options = new BrowserOptions(config.options)
+
+  return { screenConfig, windowConfig, options }
 }
 
 module.exports = Browser
