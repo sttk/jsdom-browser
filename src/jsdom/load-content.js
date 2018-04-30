@@ -10,7 +10,7 @@ function promiseToLoadContent (window, url, { contentData = '', lastModified,
   url = url || 'about:blank'
 
   const urlObj = whatwgURL.parseURL(url)
-  if (urlObj === 'failure') {
+  if (!urlObj) {
     return Promise.reject(new URIError(url))
   }
 
