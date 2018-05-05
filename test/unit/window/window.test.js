@@ -578,8 +578,8 @@ describe('window', () => {
         expect(window.devicePixelRatio).to.equal(1)
       })
 
-      it('Should move to left-top side if specified delta is too small',
-      () => {
+      it('Should move to left-top side if specified delta is too small' +
+      '', () => {
         windowConfig.isFrameWindow = false
         expect(windowConfig.isFrameWindow).to.be.false
         expect(windowConfig.isMovableByScript).to.be.true
@@ -616,8 +616,8 @@ describe('window', () => {
         expect(window.devicePixelRatio).to.equal(1)
       })
 
-      it('Should move to right-bottom side if specified delta are too large',
-      () => {
+      it('Should move to right-bottom side if specified delta are too large' +
+      '', () => {
         windowConfig.isFrameWindow = false
         expect(windowConfig.isFrameWindow).to.be.false
         expect(windowConfig.isMovableByScript).to.be.true
@@ -735,8 +735,8 @@ describe('window', () => {
         expect(window.devicePixelRatio).to.equal(1)
       })
 
-      it('Should resize to minimum size if specified size is too small',
-      () => {
+      it('Should resize to minimum size if specified size is too small' +
+      '', () => {
         windowConfig.isFrameWindow = false
         expect(windowConfig.isFrameWindow).to.be.false
         expect(windowConfig.isResizableByScript).to.be.true
@@ -758,8 +758,8 @@ describe('window', () => {
         expect(window.devicePixelRatio).to.equal(1)
       })
 
-      it('Should resize to screen avail size if specified size is too large',
-      () => {
+      it('Should resize to screen avail size if specified size is too large' +
+      '', () => {
         windowConfig.isFrameWindow = false
         expect(windowConfig.isFrameWindow).to.be.false
         expect(windowConfig.isResizableByScript).to.be.true
@@ -860,8 +860,8 @@ describe('window', () => {
         expect(window.devicePixelRatio).to.equal(1)
       })
 
-      it('Should resize to minimum size if specified delta is too small',
-      () => {
+      it('Should resize to minimum size if specified delta is too small' +
+      '', () => {
         windowConfig.isFrameWindow = false
         expect(windowConfig.isFrameWindow).to.be.false
         expect(windowConfig.isResizableByScript).to.be.true
@@ -883,8 +883,8 @@ describe('window', () => {
         expect(window.devicePixelRatio).to.equal(1)
       })
 
-      it('Should resize to screen avail size if specified delta is too large',
-      () => {
+      it('Should resize to screen avail size if specified delta is too large' +
+      '', () => {
         windowConfig.isFrameWindow = false
         expect(windowConfig.isFrameWindow).to.be.false
         expect(windowConfig.isResizableByScript).to.be.true

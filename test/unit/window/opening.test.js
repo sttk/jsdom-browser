@@ -244,8 +244,8 @@ describe('window/opening', () => {
       })
     })
 
-    it('Should open a window : url is nullish and target is "_blank"',
-    done => {
+    it('Should open a window : url is nullish and target is "_blank"' +
+    '', done => {
       const win0 = createWindow()
       const win1 = win0.open(null, '_blank')
       expect(win1).to.not.equal(win0)
@@ -447,8 +447,8 @@ describe('window/opening', () => {
       done()
     })
 
-    it('Should open a named frame window even if features is not empty ',
-    done => {
+    it('Should open a named frame window even if features is not empty ' +
+    '', done => {
       browser.contentManager.add('http://sample.com/aaa', '<p>Sample</p>')
 
       const win0 = createWindow()

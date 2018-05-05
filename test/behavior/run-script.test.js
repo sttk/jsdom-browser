@@ -22,7 +22,7 @@ document.body.innerHTML = '<p>Hello</p>';
 </html>
 `)
     const window = browser.openWindow('http://test/script')
-    window.addEventListener('load', event => {
+    window.addEventListener('load', () => {
       expect(window.document.querySelector('p').textContent).to.equal('Hello')
       done()
     })

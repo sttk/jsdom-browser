@@ -543,8 +543,8 @@ describe('window/config', () => {
       expect(windowConfig.popup.minSize.height).to.equal(12)
     })
 
-    it('Should use .frame.minOpeningSize.* when .isFrameWindow is true',
-    () => {
+    it('Should use .frame.minOpeningSize.* when .isFrameWindow is true' +
+    '', () => {
       const windowConfig = new WindowConfig({ screen })
       expect(windowConfig.isFrameWindow).to.be.true
 
@@ -586,8 +586,8 @@ describe('window/config', () => {
       expect(windowConfig.popup.minOpeningSize.height).to.equal(18)
     })
 
-    it('Should use .frame.minResizableSize.* when .isFrameWindow is true',
-    () => {
+    it('Should use .frame.minResizableSize.* when .isFrameWindow is true' +
+    '', () => {
       const windowConfig = new WindowConfig({ screen })
       expect(windowConfig.isFrameWindow).to.be.true
 
@@ -802,8 +802,8 @@ describe('window/config', () => {
       expect(windowConfig.popup.minSize.height).to.equal(12)
     })
 
-    it('Should use .popup.minOpeningSize.* when .isFrameWindow is true',
-    () => {
+    it('Should use .popup.minOpeningSize.* when .isFrameWindow is true' +
+    '', () => {
       const windowConfig = new WindowConfig({ screen })
       windowConfig.isFrameWindow = false
       expect(windowConfig.isFrameWindow).to.be.false
@@ -846,8 +846,8 @@ describe('window/config', () => {
       expect(windowConfig.popup.minOpeningSize.height).to.equal(18)
     })
 
-    it('Should use .popup.minResizableSize.* when .isFrameWindow is true',
-    () => {
+    it('Should use .popup.minResizableSize.* when .isFrameWindow is true' +
+    '', () => {
       const windowConfig = new WindowConfig({ screen })
       windowConfig.isFrameWindow = false
       expect(windowConfig.isFrameWindow).to.be.false
@@ -1033,13 +1033,13 @@ describe('window/config', () => {
       expect(a).to.equal('A')
       expect(b).to.equal('B')
       expect(c).to.equal('C')
-      callCount.on ++
+      callCount.on++
     })
     windowConfig.once('event1', (a, b, c) => {
       expect(a).to.equal('A')
       expect(b).to.equal('B')
       expect(c).to.equal('C')
-      callCount.once ++
+      callCount.once++
     })
 
     windowConfig.$events.emit('event1', 'A', 'B', 'C')
