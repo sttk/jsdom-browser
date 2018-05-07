@@ -3,7 +3,6 @@
 const expect = require('chai').expect
 const WindowConfig = require('../../../src/window/config')
 const ScreenConfig = require('../../../src/screen/config')
-const Screen = require('../../../src/screen')
 
 describe('window/config', () => {
 
@@ -11,7 +10,7 @@ describe('window/config', () => {
 
     it('Should create WindowConfig object with no argument', () => {
       const windowConfig = new WindowConfig()
-      expect(windowConfig.screen).to.be.an.instanceof(Screen)
+      expect(windowConfig.screenConfig).to.be.an.instanceof(ScreenConfig)
       expect(windowConfig.top).to.equal(0)
       expect(windowConfig.left).to.equal(0)
       expect(windowConfig.width).to.equal(1024)
@@ -69,10 +68,8 @@ describe('window/config', () => {
       screenConfig.availRight = 0
       screenConfig.availBottom = 0
 
-      const screen = new Screen(screenConfig)
-
       const windowConfig = new WindowConfig({
-        screen, left: 10, top: 20, width: 500, height: 400,
+        screenConfig, left: 10, top: 20, width: 500, height: 400,
         frame: {
           edgeSize: { top: 11, left: 3, right: 4, bottom: 39 },
           minSize: { width: 30, height: 50 },
@@ -91,13 +88,13 @@ describe('window/config', () => {
         closed: true, isFrameWindow: true,
       })
 
-      expect(windowConfig.screen).to.equal(screen)
-      expect(windowConfig.screen.width).to.equal(1280)
-      expect(windowConfig.screen.height).to.equal(1024)
-      expect(windowConfig.screen.availWidth).to.equal(1280)
-      expect(windowConfig.screen.availHeight).to.equal(1001)
-      expect(windowConfig.screen.availLeft).to.equal(0)
-      expect(windowConfig.screen.availTop).to.equal(23)
+      expect(windowConfig.screenConfig).to.equal(screenConfig)
+      expect(windowConfig.screenConfig.width).to.equal(1280)
+      expect(windowConfig.screenConfig.height).to.equal(1024)
+      expect(windowConfig.screenConfig.availTop).to.equal(23)
+      expect(windowConfig.screenConfig.availLeft).to.equal(0)
+      expect(windowConfig.screenConfig.availRight).to.equal(0)
+      expect(windowConfig.screenConfig.availBottom).to.equal(0)
 
       expect(windowConfig.top).to.equal(20)
       expect(windowConfig.left).to.equal(10)
@@ -171,10 +168,8 @@ describe('window/config', () => {
       screenConfig.availRight = 0
       screenConfig.availBottom = 0
 
-      const screen = new Screen(screenConfig)
-
       const windowConfig0 = new WindowConfig({
-        screen, left: 10, top: 20, width: 500, height: 400,
+        screenConfig, left: 10, top: 20, width: 500, height: 400,
         frame: {
           edgeSize: { top: 11, left: 3, right: 4, bottom: 39 },
           minSize: { width: 30, height: 50 },
@@ -195,13 +190,13 @@ describe('window/config', () => {
 
       const windowConfig = new WindowConfig(windowConfig0)
 
-      expect(windowConfig.screen).to.equal(screen)
-      expect(windowConfig.screen.width).to.equal(1280)
-      expect(windowConfig.screen.height).to.equal(1024)
-      expect(windowConfig.screen.availWidth).to.equal(1280)
-      expect(windowConfig.screen.availHeight).to.equal(1001)
-      expect(windowConfig.screen.availLeft).to.equal(0)
-      expect(windowConfig.screen.availTop).to.equal(23)
+      expect(windowConfig.screenConfig).to.equal(screenConfig)
+      expect(windowConfig.screenConfig.width).to.equal(1280)
+      expect(windowConfig.screenConfig.height).to.equal(1024)
+      expect(windowConfig.screenConfig.availTop).to.equal(23)
+      expect(windowConfig.screenConfig.availLeft).to.equal(0)
+      expect(windowConfig.screenConfig.availRight).to.equal(0)
+      expect(windowConfig.screenConfig.availBottom).to.equal(0)
 
       expect(windowConfig.top).to.equal(20)
       expect(windowConfig.left).to.equal(10)
@@ -269,16 +264,15 @@ describe('window/config', () => {
 
   describe('property accessors', () => {
     const screenConfig = new ScreenConfig()
-    const screen = new Screen(screenConfig)
-    const windowConfig = new WindowConfig({ screen })
+    const windowConfig = new WindowConfig({ screenConfig })
 
-    it('Should not change .screen', () => {
-      const screen2 = new Screen(screenConfig)
-      expect(screen2).not.to.equal(screen)
+    it('Should not change .screenConfig', () => {
+      const screenConfig2 = new ScreenConfig()
+      expect(screenConfig2).not.to.equal(screenConfig)
 
-      windowConfig.screen = screen2
-      expect(windowConfig.screen).to.equal(screen)
-      expect(windowConfig.screen).not.to.equal(screen2)
+      windowConfig.screenConfig = screenConfig2
+      expect(windowConfig.screenConfig).to.equal(screenConfig)
+      expect(windowConfig.screenConfig).not.to.equal(screenConfig2)
     })
 
     it('Should change .top/.left/.width/.height', () => {
@@ -413,10 +407,9 @@ describe('window/config', () => {
 
   describe('property restrictions', () => {
     const screenConfig = new ScreenConfig()
-    const screen = new Screen(screenConfig)
 
     it('Should use .frame.edgeSize.* when .isFrameWindow is true', () => {
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       expect(windowConfig.isFrameWindow).to.be.true
 
       expect(windowConfig.edgeSize.width).to.equal(0)
@@ -502,7 +495,7 @@ describe('window/config', () => {
     })
 
     it('Should use .frame.minSize.* when .isFrameWindow is true', () => {
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       expect(windowConfig.isFrameWindow).to.be.true
 
       expect(windowConfig.minSize.width).to.equal(0)
@@ -545,7 +538,7 @@ describe('window/config', () => {
 
     it('Should use .frame.minOpeningSize.* when .isFrameWindow is true' +
     '', () => {
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       expect(windowConfig.isFrameWindow).to.be.true
 
       expect(windowConfig.minOpeningSize.width).to.equal(0)
@@ -588,7 +581,7 @@ describe('window/config', () => {
 
     it('Should use .frame.minResizableSize.* when .isFrameWindow is true' +
     '', () => {
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       expect(windowConfig.isFrameWindow).to.be.true
 
       expect(windowConfig.minResizableSize.width).to.equal(0)
@@ -630,7 +623,7 @@ describe('window/config', () => {
     })
 
     it('Should use .frame.openingShift.* when .isFrameWindow is true', () => {
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       expect(windowConfig.isFrameWindow).to.be.true
 
       expect(windowConfig.openingShift.x).to.equal(0)
@@ -673,7 +666,7 @@ describe('window/config', () => {
     })
 
     it('Should use .popup.edgeSize.* when .isFrameWindow is true', () => {
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       windowConfig.isFrameWindow = false
       expect(windowConfig.isFrameWindow).to.be.false
 
@@ -760,7 +753,7 @@ describe('window/config', () => {
     })
 
     it('Should use .popup.minSize.* when .isFrameWindow is true', () => {
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       windowConfig.isFrameWindow = false
       expect(windowConfig.isFrameWindow).to.be.false
 
@@ -804,7 +797,7 @@ describe('window/config', () => {
 
     it('Should use .popup.minOpeningSize.* when .isFrameWindow is true' +
     '', () => {
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       windowConfig.isFrameWindow = false
       expect(windowConfig.isFrameWindow).to.be.false
 
@@ -848,7 +841,7 @@ describe('window/config', () => {
 
     it('Should use .popup.minResizableSize.* when .isFrameWindow is true' +
     '', () => {
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       windowConfig.isFrameWindow = false
       expect(windowConfig.isFrameWindow).to.be.false
 
@@ -891,7 +884,7 @@ describe('window/config', () => {
     })
 
     it('Should use .popup.openingShift.* when .isFrameWindow is true', () => {
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       windowConfig.isFrameWindow = false
       expect(windowConfig.isFrameWindow).to.be.false
 
@@ -934,7 +927,7 @@ describe('window/config', () => {
     })
 
     it('Should limit .width/.height with .minSize', () => {
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
 
       expect(windowConfig.minSize.width).to.equal(0)
       expect(windowConfig.minSize.height).to.equal(0)
@@ -967,7 +960,7 @@ describe('window/config', () => {
     })
 
     it('Should limit .zoom with .minZoom and .maxZoom', () => {
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
 
       expect(windowConfig.zoom).to.equal(1)
       expect(windowConfig.minZoom).to.equal(0.25)

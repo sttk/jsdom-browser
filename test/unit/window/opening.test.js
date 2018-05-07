@@ -81,13 +81,19 @@ describe('window/opening', () => {
       expect(win1.document.URL).to.equal('about:blank')
       expect(win1.document.readyState).to.equal('loading')
 
+      const cfg0 = windowManager.getConfig(win0)
       const cfg1 = windowManager.getConfig(win1)
+      expect(cfg0).to.exist
       expect(cfg1).to.exist
+
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       cfg1.once('load', (err, win, cfg) => {
         expect(err).not.exist
         expect(win).to.equal(win1)
-        expect(cfg).to.equal(cfg)
+        expect(cfg).to.equal(cfg1)
         expect(win.document.URL).to.equal('about:blank')
         expect(win.document.readyState).to.equal('complete')
         done(err)
@@ -105,8 +111,14 @@ describe('window/opening', () => {
       expect(win1.document.URL).to.equal('about:blank')
       expect(win1.document.readyState).to.equal('loading')
 
+      const cfg0 = windowManager.getConfig(win0)
       const cfg1 = windowManager.getConfig(win1)
+      expect(cfg0).to.exist
       expect(cfg1).to.exist
+
+      expect(win0.screen).to.equal(win1.screen)
+      expect(cfg0.screen).to.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       cfg1.once('load', (err, win, cfg) => {
         expect(err).not.exist
@@ -129,8 +141,14 @@ describe('window/opening', () => {
       expect(win1.document.URL).to.equal('about:blank')
       expect(win1.document.readyState).to.equal('loading')
 
+      const cfg0 = windowManager.getConfig(win0)
       const cfg1 = windowManager.getConfig(win1)
+      expect(cfg0).to.exist
       expect(cfg1).to.exist
+
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       cfg1.once('load', (err, win, cfg) => {
         expect(err).not.exist
@@ -153,8 +171,14 @@ describe('window/opening', () => {
       expect(win1.document.URL).to.equal('about:blank')
       expect(win1.document.readyState).to.equal('loading')
 
+      const cfg0 = windowManager.getConfig(win0)
       const cfg1 = windowManager.getConfig(win1)
+      expect(cfg0).to.exist
       expect(cfg1).to.exist
+
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       cfg1.once('load', (err, win, cfg) => {
         expect(err).not.exist
@@ -177,8 +201,14 @@ describe('window/opening', () => {
       expect(win1.document.URL).to.equal('about:blank')
       expect(win1.document.readyState).to.equal('loading')
 
+      const cfg0 = windowManager.getConfig(win0)
       const cfg1 = windowManager.getConfig(win1)
+      expect(cfg0).to.exist
       expect(cfg1).to.exist
+
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       cfg1.on('load', (err, win, cfg) => {
         expect(err).not.exist
@@ -207,8 +237,14 @@ describe('window/opening', () => {
       expect(win1.document.URL).to.equal('about:blank')
       expect(win1.document.readyState).to.equal('loading')
 
+      const cfg0 = windowManager.getConfig(win0)
       const cfg1 = windowManager.getConfig(win1)
+      expect(cfg0).to.exist
       expect(cfg1).to.exist
+
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       cfg1.on('load', (err, win, cfg) => {
         expect(err).not.exist
@@ -231,8 +267,14 @@ describe('window/opening', () => {
       expect(win1.document.URL).to.equal('about:blank')
       expect(win1.document.readyState).to.equal('loading')
 
+      const cfg0 = windowManager.getConfig(win0)
       const cfg1 = windowManager.getConfig(win1)
+      expect(cfg0).to.exist
       expect(cfg1).to.exist
+
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       cfg1.on('load', (err, win, cfg) => {
         expect(err).not.exist
@@ -256,8 +298,14 @@ describe('window/opening', () => {
       expect(win1.document.URL).to.equal('about:blank')
       expect(win1.document.readyState).to.equal('complete')
 
+      const cfg0 = windowManager.getConfig(win0)
       const cfg1 = windowManager.getConfig(win1)
+      expect(cfg0).to.exist
       expect(cfg1).to.exist
+
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       cfg1.on('load', (err, win, cfg) => {
         expect(err).not.exist
@@ -286,8 +334,14 @@ describe('window/opening', () => {
       expect(win1.document.URL).to.equal('about:blank')
       expect(win1.document.readyState).to.equal('complete')
 
+      const cfg0 = windowManager.getConfig(win0)
       const cfg1 = windowManager.getConfig(win1)
+      expect(cfg0).to.exist
       expect(cfg1).to.exist
+
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       cfg1.on('load', err => {
         done(err)
@@ -310,8 +364,14 @@ describe('window/opening', () => {
       expect(win1.document.URL).to.equal('about:blank')
       expect(win1.document.readyState).to.equal('complete')
 
+      const cfg0 = windowManager.getConfig(win0)
       const cfg1 = windowManager.getConfig(win1)
+      expect(cfg0).to.exist
       expect(cfg1).to.exist
+
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       cfg1.on('load', err => {
         done(err)
@@ -357,6 +417,10 @@ describe('window/opening', () => {
       const cfg1 = windowManager.getConfig(win1)
       expect(cfg1.isFrameWindow).to.equal(true)
 
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
+
       done()
     })
 
@@ -395,6 +459,10 @@ describe('window/opening', () => {
 
       const cfg1 = windowManager.getConfig(win1)
       expect(cfg1.isFrameWindow).to.equal(false)
+
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       expect(win1.name).to.equal('p1')
       expect(win1.screenX).to.equal(45)
@@ -435,6 +503,10 @@ describe('window/opening', () => {
 
       const cfg1 = windowManager.getConfig(win1)
       expect(cfg1.isFrameWindow).to.equal(false)
+
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       expect(win1.name).to.equal('p1')
       expect(win1.screenX).to.equal(140)
@@ -484,6 +556,10 @@ describe('window/opening', () => {
       const cfg1 = windowManager.getConfig(win1)
       expect(cfg1.isFrameWindow).to.equal(true)
 
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
+
       expect(win1.name).to.equal('f1')
       expect(win1.screenX).to.equal(40)
       expect(win1.screenY).to.equal(30)
@@ -523,6 +599,10 @@ describe('window/opening', () => {
 
       const cfg1 = windowManager.getConfig(win1)
       expect(cfg1.isFrameWindow).to.equal(false)
+
+      expect(win0.screen).to.not.equal(win1.screen)
+      expect(cfg0.screen).to.not.equal(cfg1.screen)
+      expect(cfg0.screenConfig).to.equal(cfg1.screenConfig)
 
       expect(win1.name).to.equal('p1')
       expect(win1.screenX).to.equal(145)

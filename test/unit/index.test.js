@@ -163,8 +163,8 @@ describe('browser', () => {
       const screen0 = window0.screen
       const screen1 = window1.screen
 
-      expect(window0).not.equal(window1)
-      expect(screen0).to.equal(screen1)
+      expect(window0).to.not.equal(window1)
+      expect(screen0).to.not.equal(screen1)
 
       const windowConfig0 = browser.getConfig(window0)
       const windowConfig1 = browser.getConfig(window1)
@@ -181,6 +181,7 @@ describe('browser', () => {
       expect(window1.outerWidth).to.equal(1500)
 
       screenConfig0.width = 3000
+      expect(screenConfig0.width).to.equal(3000)
       expect(screenConfig1.width).to.equal(3000)
       expect(screen0.width).to.equal(3000)
       expect(screen1.width).to.equal(3000)

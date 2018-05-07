@@ -5,6 +5,7 @@ const { readonly, writable, replaceable, method } = ConfigBase
 const defaultConfig = require('./default')
 const defaultNumber = require('default-number')
 const { EventEmitter } = require('events')
+const Screen = require('../screen')
 
 class WindowConfig extends ConfigBase {
 
@@ -23,8 +24,10 @@ class WindowConfig extends ConfigBase {
   }
 
   defineAccessors () {
+    this.$private.screen =  new Screen(this.$private.screenConfig)
+
     return {
-      screen: (p, key) => readonly({
+      screenConfig: (p, key) => readonly({
         get: () => p[key]
       }),
 

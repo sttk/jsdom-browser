@@ -6,7 +6,6 @@ const ContentManager = require('./window/content')
 const WindowConfig = require('./window/config')
 const { newWindow, openWindow } = require('./window/opening')
 const ScreenConfig = require('./screen/config')
-const Screen = require('./screen')
 const BrowserOptions = require('./options')
 const defaultConfig = require('./default')
 
@@ -14,6 +13,7 @@ class Browser {
 
   constructor (browserConfig) {
     const { windowConfig, screenConfig, options } = newConfig(browserConfig)
+
     this.windowConfig = windowConfig
     this.screenConfig = screenConfig
     this.options = options
@@ -62,9 +62,8 @@ function newConfig (browserConfig) {
   }
 
   const screenConfig = new ScreenConfig(config.screenConfig)
-  const screen = new Screen(screenConfig)
 
-  config.windowConfig.screen = screen
+  config.windowConfig.screenConfig = screenConfig
   const windowConfig = new WindowConfig(config.windowConfig)
 
   const options = new BrowserOptions(config.options)

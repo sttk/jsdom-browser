@@ -1,10 +1,9 @@
 'use strict'
 
 const ScreenConfig = require('../screen/config')
-const Screen = require('../screen')
 
 module.exports = {
-  screen: new Screen(new ScreenConfig()),
+  screenConfig: new ScreenConfig(),
 
   top: 0,
   left: 0,

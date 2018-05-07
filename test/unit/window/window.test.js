@@ -10,8 +10,8 @@ describe('window', () => {
 
   describe('interface', () => {
     const screenConfig = new ScreenConfig()
-    const screen = new Screen(screenConfig)
-    const windowConfig = new WindowConfig({ screen })
+    const windowConfig = new WindowConfig({ screenConfig })
+    const screen = windowConfig.screen
     const window = new JSDOM().window
     windowConfig.configure(window)
 
@@ -242,8 +242,7 @@ describe('window', () => {
 
   describe('zooming', () => {
     const screenConfig = new ScreenConfig()
-    const screen = new Screen(screenConfig)
-    const windowConfig = new WindowConfig({ screen })
+    const windowConfig = new WindowConfig({ screenConfig })
     const window = new JSDOM().window
     windowConfig.configure(window)
 
@@ -357,9 +356,7 @@ describe('window', () => {
 
     describe('.moveTo', () => {
       const screenConfig = new ScreenConfig()
-      const screen = new Screen(screenConfig)
-
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       const window = new JSDOM().window.document.defaultView
       windowConfig.configure(window)
 
@@ -489,8 +486,7 @@ describe('window', () => {
 
     describe('.moveBy', () => {
       const screenConfig = new ScreenConfig()
-      const screen = new Screen(screenConfig)
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       const window = new JSDOM().window
       windowConfig.configure(window)
 
@@ -659,8 +655,7 @@ describe('window', () => {
 
     describe('.resizeTo', () => {
       const screenConfig = new ScreenConfig()
-      const screen = new Screen(screenConfig)
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       const window = new JSDOM().window
       windowConfig.configure(window)
 
@@ -784,8 +779,7 @@ describe('window', () => {
 
     describe('.resizeBy', () => {
       const screenConfig = new ScreenConfig()
-      const screen = new Screen(screenConfig)
-      const windowConfig = new WindowConfig({ screen })
+      const windowConfig = new WindowConfig({ screenConfig })
       const window = new JSDOM().window
       windowConfig.configure(window)
 
@@ -911,8 +905,7 @@ describe('window', () => {
 
       it('Should scroll to specified position', () => {
         const screenConfig = new ScreenConfig()
-        const screen = new Screen(screenConfig)
-        const windowConfig = new WindowConfig({ screen })
+        const windowConfig = new WindowConfig({ screenConfig })
         const window = new JSDOM().window
         windowConfig.configure(window)
 
@@ -946,8 +939,7 @@ describe('window', () => {
     describe('.scrollTo', () => {
       it('Should scroll to specified position', () => {
         const screenConfig = new ScreenConfig()
-        const screen = new Screen(screenConfig)
-        const windowConfig = new WindowConfig({ screen })
+        const windowConfig = new WindowConfig({ screenConfig })
         const window = new JSDOM().window
         windowConfig.configure(window)
 
@@ -981,8 +973,7 @@ describe('window', () => {
     describe('.scrollBy', () => {
       it('Should scroll by specified delta', () => {
         const screenConfig = new ScreenConfig()
-        const screen = new Screen(screenConfig)
-        const windowConfig = new WindowConfig({ screen })
+        const windowConfig = new WindowConfig({ screenConfig })
         const window = new JSDOM().window
         windowConfig.configure(window)
 
